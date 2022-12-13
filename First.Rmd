@@ -15,9 +15,9 @@ Visualization of data with plots.
 Create many plots.
 
 #### One plot for each species with variables (control, intermediate, waterstress)
-X= Date
-Y= Variable
-Y1= Plant height   
+X= Date 
+Y= Variable 
+Y1= Plant height 
 Y2= Leaf number 
 Y3= Leaf lenght 
 Y4= Leaf width 
