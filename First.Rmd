@@ -1,0 +1,86 @@
+---
+title: "First"
+author: "Julie, Oussama and Victória "
+date: "2022-12-13"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## First dealing with data
+
+Visualization of data with plots. 
+Create many plots.
+
+#### One plot for each species with variables (control, intermediate, waterstress)
+X= Date
+Y= Variable
+Y1= Plant height   
+Y2= Leaf number 
+Y3= Leaf lenght 
+Y4= Leaf width 
+Y5= Leaf area 
+Y7= Chlorophyll 
+
+S1 : Solanum lycopersicum
+```{r}
+
+```
+
+
+S2 : Amaranthus retroflexus
+```{r}
+
+```
+
+
+S3 : Spinacia oleracea
+```{r}
+
+```
+
+
+S4 : Amaranthus retroflexus
+```{r}
+
+```
+
+
+S5 : Hordeum vulgare
+```{r}
+
+```
+
+
+S6 : Lolium perenne
+```{r}
+
+```
+
+
+S7 : Beta vulgaris
+```{r}
+
+```
+
+
+S8 : Sonchus oleraceus
+```{r}
+
+```
+
+
+S9 : Portulacea oleracea
+```{r}
+
+```
+
+
+S10 : Raphanus sativus
+```{r}
+
+```
+
+#### Plot for 
