@@ -32,7 +32,7 @@ Y7= Chlorophyll
 
 S1 : Solanum lycopersicum
 ```{r, fig.height=15}
-# library(ggplot2)
+library(ggplot2)
 # All species
 ggplot(d0, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) + 
   geom_line()+
