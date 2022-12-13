@@ -32,7 +32,7 @@ Y7= Chlorophyll
 
 S1 : Solanum lycopersicum
 ```{r, fig.height=15}
-# install(ggplot2)
+install.packages(ggplot2)
 library(ggplot2)
 # All species
 ggplot(d0, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) + 
@@ -41,7 +41,7 @@ ggplot(d0, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) +
 
 # For Solanum lycopersicum
 s1 <- d0[d0$Species=="Solanum lycopersicum",]
-ggplot(d1, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) + 
+ggplot(s1, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) + 
   geom_line()
 
 ```
