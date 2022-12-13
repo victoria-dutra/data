@@ -10,6 +10,12 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## First dealing with data
+```{r}
+# install.packages("readxl")
+readxl::read_excel("data_dec/water_stress.xlsx")
+d0 <- readxl::read_excel("data_dec/water_stress.xlsx", sheet = "Data")
+```
+
 
 Visualization of data with plots. 
 Create many plots.
