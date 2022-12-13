@@ -32,10 +32,14 @@ Y7= Chlorophyll
 
 S1 : Solanum lycopersicum
 ```{r, fig.height=15}
+<<<<<<< HEAD
 # <<<<<<< HEAD
 # =======
 # install.packages(ggplot2)
 # >>>>>>> 8a5d90e040749e2066eaf307a61d976e6a331505
+=======
+install.packages("ggplot2", dependencies = TRUE)
+>>>>>>> 115408f4363de28ae01a5d1b744c6730e06eeebd
 library(ggplot2)
 # All species
 ggplot(d0, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) + 
@@ -54,7 +58,7 @@ S2 : Amaranthus retroflexus
 ```{r}
 
 
-#comments
+#comments added
 ```
 
 
