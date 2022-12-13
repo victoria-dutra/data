@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 Visualization of data with plots. 
 Create many plots.
 
-#### One plot for each species with variables (control, intermediate, waterstress)
+#### One plot for each species with variables and treatments (control, intermediate, waterstress)
 X= Date 
 Y= Variable 
 Y1= Plant height 
