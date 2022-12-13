@@ -31,7 +31,17 @@ Y5= Leaf area
 Y7= Chlorophyll 
 
 S1 : Solanum lycopersicum
-```{r}
+```{r, fig.height=15}
+# library(ggplot2)
+# All species
+ggplot(d0, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) + 
+  geom_line()+
+  facet_grid( Species ~. )
+
+# For Solanum lycopersicum
+s1 <- d0[d0$Species=="Solanum lycopersicum",]
+ggplot(d1, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) + 
+  geom_line()
 
 ```
 
