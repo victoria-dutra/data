@@ -1,0 +1,144 @@
+---
+title: "First"
+author: "Julie, Oussama and Victória "
+date: "2022-12-13"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## First dealing with data
+```{r}
+# install.packages("readxl")
+readxl::read_excel("data_dec/water_stress.xlsx")
+d0 <- readxl::read_excel("data_dec/water_stress.xlsx", sheet = "Data")
+```
+
+
+Visualization of data with plots. 
+Create many plots.
+
+#### One plot for each species with variables and treatments (control, intermediate, waterstress)
+X= Date 
+Y= Variable 
+Y1= Plant height 
+Y2= Leaf number 
+Y3= Leaf lenght 
+Y4= Leaf width 
+Y5= Leaf area 
+Y7= Chlorophyll 
+
+```{r}
+
+```
+
+
+S1 : Solanum lycopersicum
+```{r, fig.height=15}
+#install.packages("ggplot2", dependencies = TRUE)
+library(ggplot2)
+
+# All species
+ggplot(d0, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) + 
+  geom_line()+
+  facet_grid( Species ~. )
+
+# For Solanum lycopersicum
+s1 <- d0[d0$Species=="Solanum lycopersicum",]
+ggplot(s1, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) + 
+  geom_line()
+
+#For loop = for all the species
+
+#essai1
+v1 <- c("Plant_height", "Chlorophyll_content" ,"Roots_dry_weight")
+
+for(i in levels(as.factor(d0$Species))) {
+  for(variable in v1) {
+    s1 <- d0[d0$Species==i,]
+    ggplot(s1, aes(x= Week, y= s1[ ,v1], group= PlantId, color= Treatment)) + 
+      geom_line()
+  }
+}
+
+#essai2
+for(i in levels(d0$Species)) {
+  for(variable in 1:10) {
+    s2 <- d0[d0$Species,]
+    ggplot(s2, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) + 
+      geom_line()
+  }
+}
+
+#essai3
+for(i in levels(d0$Species)){
+  tf <- d0$Species=="Solanum lycopersicum"
+  ggplot(tf, aes(x = Date, y= Plant_height, group= PlantId, color= Treatment)) + 
+      geom_line()
+}
+
+#essai4
+for(i in 2:ncol(d0)) {                      
+  print(ggplot(d0, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment, data[ , i])) +
+          geom_line())
+  Sys.sleep(2)
+}
+```
+
+S2 : Amaranthus retroflexus
+```{r, fig.height=15}
+ 
+
+```
+
+
+S3 : Spinacia oleracea
+```{r}
+
+```
+
+
+S4 : Amaranthus retroflexus
+```{r}
+
+```
+
+
+S5 : Hordeum vulgare
+```{r}
+
+```
+
+
+S6 : Lolium perenne
+```{r}
+
+```
+
+
+S7 : Beta vulgaris
+```{r}
+
+```
+
+
+S8 : Sonchus oleraceus
+```{r}
+
+```
+
+
+S9 : Portulacea oleracea
+```{r}
+
+```
+
+
+S10 : Raphanus sativus
+```{r}
+
+```
+
+#### Plot for 

@@ -1,0 +1,38 @@
+---
+title: "Untitled"
+author: "Bonnefoy"
+date: "2022-12-20"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+```
+
+## First dealing with data
+```{r}
+# install.packages("readxl")
+readxl::read_excel("data_dec/water_stress.xlsx")
+d0 <- readxl::read_excel("data_dec/water_stress.xlsx", sheet = "Data")
+```
+
+```{r, eval=TRUE}
+v1 <- c("Plant_height", "Leaf_width", "Leaf_length", "Leaf_area", "Leaf_number", "Root_length", "Chlorophyll_content", "Soil_humidity", "Electrical_conductivity")
+i <- "Beta vulgaris"
+variable <- "Plant_height"
+
+for(i in levels(as.factor(d0$Species))) {
+  for(variable in v1) {
+    s1 <- d0[d0$Species==i, c(variable, "Week", "PlantId", "Treatment")]
+    s1 <- na.exclude(s1)
+    p <- ggplot(s1, aes(x= Week, y= .data[[variable]], group= PlantId, color= Treatment)) + 
+      geom_line() + 
+      labs(title = i)
+    print(p)
+  }
+}
+
+```
+
+

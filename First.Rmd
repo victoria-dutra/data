@@ -29,7 +29,7 @@ Y4= Leaf width
 Y5= Leaf area 
 Y7= Chlorophyll 
 
-S1 : Solanum lycopersicum
+
 ```{r, fig.height=15}
 # install.packages("ggplot2", dependencies = TRUE)
 library(ggplot2)
@@ -40,66 +40,31 @@ ggplot(d0, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) +
   facet_grid(Species ~.)
 
 ```
+
 ```{r}
 # For Solanum lycopersicum
 s1 <- d0[d0$Species=="Solanum lycopersicum",]
 ggplot(s1, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) + 
   geom_line()
-
 ```
 
+```{r, eval=TRUE}
+v1 <- c("Plant_height", "Leaf_width", "Leaf_length", "Leaf_area", "Leaf_number", "Root_length", "Chlorophyll_content", "Soil_humidity", "Electrical_conductivity")
+i <- "Beta vulgaris"
+variable <- "Plant_height"
 
-S2 : Amaranthus retroflexus
-```{r}
-
-
-```
-
-
-S3 : Spinacia oleracea
-```{r}
-
-```
-
-
-S4 : Amaranthus retroflexus
-```{r}
-
-```
-
-
-S5 : Hordeum vulgare
-```{r}
+for(i in levels(as.factor(d0$Species))) {
+  for(variable in v1) {
+    s1 <- d0[d0$Species==i, c(variable, "Week", "PlantId", "Treatment")]
+    s1 <- na.exclude(s1)
+    p <- ggplot(s1, aes(x= Week, y= .data[[variable]], group= PlantId, color= Treatment)) + 
+      geom_line() + 
+      labs(title = i)
+    print(p)
+  }
+}
 
 ```
-
-
-S6 : Lolium perenne
-```{r}
-
-```
-
-
-S7 : Beta vulgaris
-```{r}
-
-```
-
-
-S8 : Sonchus oleraceus
-```{r}
-
-```
-
-
-S9 : Portulacea oleracea
-```{r}
-
-```
-
-
-S10 : Raphanus sativus
-```{r}
 
 ```
 
