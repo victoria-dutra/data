@@ -40,6 +40,8 @@ ggplot(d0, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) +
   geom_line()+
   facet_grid(Species ~.)
 
+```
+```{r}
 # For Solanum lycopersicum
 s1 <- d0[d0$Species=="Solanum lycopersicum",]
 ggplot(s1, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) + 
