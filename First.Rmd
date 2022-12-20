@@ -104,7 +104,6 @@ S10 : Raphanus sativus
 ```
 
 # Chapter 2 - ANOVA
-
 ```{r}
 #Packages
 #install.packages(c("ggplot2", "ggpubr", "tidyverse", "broom", "AICcmodavg"), , dependencies = TRUE)
