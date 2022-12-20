@@ -136,7 +136,7 @@ ggplot(d1, aes(x= Treatment, y= Plant_height, fill= Species)) +
 ```
 
 ##### Leaf number 
-Week 1
+###### Week 1
 ```{r, fig.width=10}
 d1 <- d0[d0$Week == "W1" , c("Treatment", "Species", "Leaf_number") ]
 d1 <- na.exclude(d1) #remove the ones with empty cells 
@@ -148,7 +148,7 @@ ggplot(d1, aes(x= Treatment, y= Leaf_number, fill= Species)) +
   theme(strip.text.x = element_text(size=0))
 ```
 
-Week 6
+###### Week 6
 ```{r, fig.width=10}
 d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Leaf_number") ]
 d1 <- na.exclude(d1) #remove the ones with empty cells 
@@ -161,7 +161,7 @@ ggplot(d1, aes(x= Treatment, y= Leaf_number, fill= Species)) +
 ```
 
 ##### Leaf length
-Week 1
+###### Week 1
 ```{r, fig.width=10}
 d1 <- d0[d0$Week == "W1" , c("Treatment", "Species", "Leaf_length") ]
 d1 <- na.exclude(d1) #remove the ones with empty cells 
@@ -173,7 +173,7 @@ ggplot(d1, aes(x= Treatment, y= Leaf_length, fill= Species)) +
   theme(strip.text.x = element_text(size=0))
 ```
 
-Week 6
+###### Week 6
 ```{r, fig.width=10}
 d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Leaf_length") ]
 d1 <- na.exclude(d1) #remove the ones with empty cells 
@@ -186,7 +186,7 @@ ggplot(d1, aes(x= Treatment, y= Leaf_length, fill= Species)) +
 ```
 
 ##### Leaf width
-Week 1
+###### Week 1
 ```{r, fig.width=10}
 d1 <- d0[d0$Week == "W1" , c("Treatment", "Species", "Leaf_width") ]
 d1 <- na.exclude(d1) #remove the ones with empty cells 
@@ -198,7 +198,7 @@ ggplot(d1, aes(x= Treatment, y=Leaf_width, fill= Species)) +
   theme(strip.text.x = element_text(size=0))
 ```
 
-Week 6
+###### Week 6
 ```{r, fig.width=10}
 d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Leaf_width") ]
 d1 <- na.exclude(d1) #remove the ones with empty cells 
@@ -211,7 +211,7 @@ ggplot(d1, aes(x= Treatment, y=Leaf_width, fill= Species)) +
 ```
 
 ##### Leaf area
-Week 1
+###### Week 1
 ```{r, fig.width=10}
 d1 <- d0[d0$Week == "W1" , c("Treatment", "Species", "Leaf_area") ]
 d1 <- na.exclude(d1) #remove the ones with empty cells 
@@ -223,7 +223,7 @@ ggplot(d1, aes(x= Treatment, y=Leaf_area, fill= Species)) +
   theme(strip.text.x = element_text(size=0))
 ```
 
-Week 6
+###### Week 6
 ```{r, fig.width=10}
 d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Leaf_area") ]
 d1 <- na.exclude(d1) #remove the ones with empty cells 
@@ -236,7 +236,7 @@ ggplot(d1, aes(x= Treatment, y=Leaf_area, fill= Species)) +
 ```
 
 ##### Chlorophyll content
-Week 3
+###### Week 3
 ```{r, fig.width=10}
 d1 <- d0[d0$Week == "W3" , c("Treatment", "Species", "Chlorophyll_content") ]
 d1 <- na.exclude(d1) #remove the ones with empty cells 
@@ -247,7 +247,7 @@ ggplot(d1, aes(x= Treatment, y=Chlorophyll_content, fill= Species)) +
   facet_grid(. ~ Species) +
   theme(strip.text.x = element_text(size=0))
 ```
-Week 4
+###### Week 4
 ```{r, fig.width=10}
 d1 <- d0[d0$Week == "W4" , c("Treatment", "Species", "Chlorophyll_content") ]
 d1 <- na.exclude(d1) #remove the ones with empty cells 
@@ -258,7 +258,7 @@ ggplot(d1, aes(x= Treatment, y=Chlorophyll_content, fill= Species)) +
   facet_grid(. ~ Species) +
   theme(strip.text.x = element_text(size=0))
 ```
-Week 5
+###### Week 5
 ```{r, fig.width=10}
 d1 <- d0[d0$Week == "W5" , c("Treatment", "Species", "Chlorophyll_content") ]
 d1 <- na.exclude(d1) #remove the ones with empty cells 
@@ -269,7 +269,7 @@ ggplot(d1, aes(x= Treatment, y=Chlorophyll_content, fill= Species)) +
   facet_grid(. ~ Species) +
   theme(strip.text.x = element_text(size=0))
 ```
-Week 6
+###### Week 6
 ```{r, fig.width=10}
 d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Chlorophyll_content") ]
 d1 <- na.exclude(d1) #remove the ones with empty cells 
