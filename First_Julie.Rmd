@@ -10,14 +10,21 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ### This file is regarding the preliminary results for the water stress green house experiment - Group 5
+
 # Chapter 1 - First dealing with data
 ##### Visualization of data with plots.
 ```{r}
+
+# first thing to do is importing the data
 # install.packages("readxl")
 readxl::read_excel("data_dec/water_stress.xlsx")
 d0 <- readxl::read_excel("data_dec/water_stress.xlsx", sheet = "Data")
 ```
-Visualization of data with plots. 
+
+after importing the data and give it the name of d0, we are going to visualize it, by creation different plots.
+
+
+##Visualization of data with plots. 
 Create many plots.
 
 X= Date 
@@ -34,19 +41,24 @@ Y7= Chlorophyll
 # install.packages("ggplot2", dependencies = TRUE)
 library(ggplot2)
 
-# All species
+# first we are going to visualize all the species in a plot
 ggplot(d0, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) + 
   geom_line()+
   facet_grid(Species ~.)
 
 ```
 
+
+
+in this code chunk we are try to visualize one species, to know how to plot it first
 ```{r}
 # For Solanum lycopersicum
 s1 <- d0[d0$Species=="Solanum lycopersicum",]
 ggplot(s1, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) + 
   geom_line()
 ```
+
+then we will create a for loop to visualize all the species and all the variables 
 
 ```{r, eval=TRUE}
 v1 <- c("Plant_height", "Leaf_width", "Leaf_length", "Leaf_area", "Leaf_number", "Root_length", "Chlorophyll_content", "Soil_humidity", "Electrical_conductivity")
@@ -68,7 +80,9 @@ for(i in levels(as.factor(d0$Species))) {
 
 ```
 
-# Chapter 2 - ANOVA
+## Chapter 2 - ANOVA
+in this part we are trying to do an ANOVA analysis for the data
+
 ```{r}
 #Packages
 #install.packages(c("ggplot2", "ggpubr", "tidyverse", "broom", "AICcmodavg"), , dependencies = TRUE)
@@ -286,4 +300,5 @@ ggplot(d1, aes(x= Treatment, y=Root_length, fill= Species)) +
   theme(strip.text.x = element_text(size=0))
 
 ```
+
 

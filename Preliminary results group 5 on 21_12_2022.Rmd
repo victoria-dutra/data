@@ -1,0 +1,10 @@
+---
+title: "Preliminary results group 5 21/12/2022"
+author: "oussama, julie, vectoria"
+date: "2022-12-21"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
