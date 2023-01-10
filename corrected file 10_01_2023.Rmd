@@ -8,9 +8,11 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-### This file is regarding the preliminary results for the water stress green house experiment - Group 5
+### This file is regarding the results for the water stress green house experiment - Group 5
 
 # Chapter 1 - First dealing with data
+##### The initial step is the aggregation of all data from the groups (1-5) in a shared Excel file on Google Drive. This document should be downloaded as an excel sheet named "Data". 
+
 ##### Visualization of data with plots.
 ```{r}
 

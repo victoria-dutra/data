@@ -1,0 +1,324 @@
+---
+title: "Preliminary results"
+author: "Julie, Oussama and Victória "
+date: "2022-12-13"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### This file is regarding the preliminary results for the water stress green house experiment - Group 5
+# Chapter 1 - First dealing with data
+##### Visualization of data with plots.
+```{r}
+# install.packages("readxl")
+readxl::read_excel("data_dec/water_stress.xlsx")
+d0 <- readxl::read_excel("data_dec/water_stress.xlsx", sheet = "Data")
+```
+Visualization of data with plots. 
+Create many plots.
+
+X= Date 
+Y= Variable 
+Y1= Plant height 
+Y2= Leaf number 
+Y3= Leaf lenght 
+Y4= Leaf width 
+Y5= Leaf area 
+Y7= Chlorophyll 
+
+S1 : Solanum lycopersicum
+```{r, fig.height=15}
+# install.packages("ggplot2", dependencies = TRUE)
+library(ggplot2)
+
+# All species
+ggplot(d0, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) + 
+  geom_line()+
+  facet_grid(Species ~.)
+
+```
+```{r}
+# For Solanum lycopersicum
+s1 <- d0[d0$Species=="Solanum lycopersicum",]
+ggplot(s1, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) + 
+  geom_line()
+
+```
+
+
+S2 : Amaranthus retroflexus
+```{r}
+
+
+```
+
+
+S3 : Spinacia oleracea
+```{r}
+
+```
+
+
+S4 : Amaranthus retroflexus
+```{r}
+
+```
+
+
+S5 : Hordeum vulgare
+```{r}
+
+```
+
+
+S6 : Lolium perenne
+```{r}
+
+```
+
+
+S7 : Beta vulgaris
+```{r}
+
+```
+
+
+S8 : Sonchus oleraceus
+```{r}
+
+```
+
+
+S9 : Portulacea oleracea
+```{r}
+
+```
+
+
+S10 : Raphanus sativus
+```{r}
+
+```
+
+# Chapter 2 - ANOVA
+```{r}
+#Packages
+#install.packages(c("ggplot2", "ggpubr", "tidyverse", "broom", "AICcmodavg"), , dependencies = TRUE)
+library(ggplot2)
+library(ggpubr)
+library(tidyverse)
+library(broom)
+
+#Import data
+d0 <- readxl::read_excel("data_dec/water_stress.xlsx", sheet = "Data")
+d0
+names(d0)
+```
+
+
+##### Linear model 
+##### Plant Height 
+Most visual difference is in week 6 (w6)
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Plant_height") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Plant_height ~ Treatment + Species, data=d1)
+anova(lm1)
+summary(lm1)
+ggplot(d1, aes(x= Treatment, y= Plant_height, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+```
+
+##### Leaf number 
+###### Week 1
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W1" , c("Treatment", "Species", "Leaf_number") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Leaf_number ~ Treatment + Species, data=d1)
+anova(lm1)
+ggplot(d1, aes(x= Treatment, y= Leaf_number, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+```
+
+###### Week 6
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Leaf_number") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Leaf_number ~ Treatment + Species, data=d1)
+anova(lm1)
+ggplot(d1, aes(x= Treatment, y= Leaf_number, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+```
+
+##### Leaf length
+###### Week 1
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W1" , c("Treatment", "Species", "Leaf_length") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Leaf_length ~ Treatment + Species, data=d1)
+anova(lm1)
+ggplot(d1, aes(x= Treatment, y= Leaf_length, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+```
+
+###### Week 6
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Leaf_length") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Leaf_length ~ Treatment + Species, data=d1)
+anova(lm1)
+ggplot(d1, aes(x= Treatment, y= Leaf_length, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+```
+
+##### Leaf width
+###### Week 1
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W1" , c("Treatment", "Species", "Leaf_width") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Leaf_width ~ Treatment + Species, data=d1)
+anova(lm1)
+ggplot(d1, aes(x= Treatment, y=Leaf_width, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+```
+
+###### Week 6
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Leaf_width") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Leaf_width ~ Treatment + Species, data=d1)
+anova(lm1)
+ggplot(d1, aes(x= Treatment, y=Leaf_width, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+```
+
+##### Leaf area
+###### Week 1
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W1" , c("Treatment", "Species", "Leaf_area") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Leaf_area ~ Treatment + Species, data=d1)
+anova(lm1)
+ggplot(d1, aes(x= Treatment, y=Leaf_area, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+```
+
+###### Week 6
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Leaf_area") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Leaf_area ~ Treatment + Species, data=d1)
+anova(lm1)
+ggplot(d1, aes(x= Treatment, y=Leaf_area, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+```
+
+##### Chlorophyll content
+###### Week 3
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W3" , c("Treatment", "Species", "Chlorophyll_content") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Chlorophyll_content ~ Treatment + Species, data=d1)
+anova(lm1)
+ggplot(d1, aes(x= Treatment, y=Chlorophyll_content, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+```
+###### Week 4
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W4" , c("Treatment", "Species", "Chlorophyll_content") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Chlorophyll_content ~ Treatment + Species, data=d1)
+anova(lm1)
+ggplot(d1, aes(x= Treatment, y=Chlorophyll_content, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+```
+###### Week 5
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W5" , c("Treatment", "Species", "Chlorophyll_content") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Chlorophyll_content ~ Treatment + Species, data=d1)
+anova(lm1)
+ggplot(d1, aes(x= Treatment, y=Chlorophyll_content, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+```
+###### Week 6
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Chlorophyll_content") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Chlorophyll_content ~ Treatment + Species, data=d1)
+anova(lm1)
+ggplot(d1, aes(x= Treatment, y=Chlorophyll_content, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+```
+
+##### Aerial fresh weight 
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Aerial_fresh_weight") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Aerial_fresh_weight ~ Treatment + Species, data=d1)
+anova(lm1)
+summary(lm1)
+ggplot(d1, aes(x= Treatment, y=Aerial_fresh_weight, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+
+```
+
+##### Aerial dry weight 
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Aerial_dry_weight") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Aerial_dry_weight ~ Treatment + Species, data=d1)
+anova(lm1)
+summary(lm1)
+ggplot(d1, aes(x= Treatment, y=Aerial_dry_weight, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+
+```
+
+##### Root length
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Root_length") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Root_length ~ Treatment + Species, data=d1)
+anova(lm1)
+summary(lm1)
+ggplot(d1, aes(x= Treatment, y=Root_length, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+
+```
+
