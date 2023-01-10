@@ -24,16 +24,23 @@ library(ggplot2)
 #### This file is regarding the results for the water stress green house experiment - Group 5
 
 ## Chapter 1 - Downloading the data
-##### The initial step is the aggregation of all data from the groups (1-5) in a shared Excel file on Google Drive. This document should be downloaded as an excel sheet named "Data", in this project's repository folder. In order to import this data we used the package "readxl".
+The initial step is the aggregation of all data from the groups (1-5) in a shared Excel file on Google Drive. This document should be downloaded as an excel sheet named "Data", in this project's repository folder. 
+
+* add chunk for downloading data 
+```{r}
+
+```
+
+In order to import this data we used the package "readxl".
 ```{r}
 readxl::read_excel("data_dec/water_stress.xlsx")
 d0 <- readxl::read_excel("data_dec/water_stress.xlsx", sheet = "Data")
 ```
-##### After importing the data, we give it the name of d0. Next step is to visualize it, by creating different plots.
+After importing the data, we give it the name of d0. Next step is to visualize it, by creating different plots.
 
 ## Chapter 2 - Visualization of data with plots. 
-##### In this step we want to create many plots in order to better visualize the data.
-##### We will use X= Date and Y= Variable (Y1= Plant height ; Y2= Leaf number ; Y3= Leaf lenght ; Y4= Leaf width ; Y5= Leaf area ; Y7= Chlorophyll ) 
+In this step we want to create many plots in order to better visualize the data.
+We will use X= Date and Y= Variable (Y1= Plant height ; Y2= Leaf number ; Y3= Leaf lenght ; Y4= Leaf width ; Y5= Leaf area ; Y7= Chlorophyll ) 
 
 ##### First plot with all species
 ```{r, fig.height=15}
@@ -42,7 +49,7 @@ ggplot(d0, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) +
   facet_grid(Species ~.)
 ```
 
-##### This next code chunk is meant to help visualize only one species (Solanum lycopersicum) and script on how to plot it
+This next code chunk is meant to help visualize only one species (Solanum lycopersicum) and script on how to plot it
 ```{r}
 # For Solanum lycopersicum
 s1 <- d0[d0$Species=="Solanum lycopersicum",]
@@ -50,7 +57,7 @@ ggplot(s1, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) +
   geom_line()
 ```
 
-##### Now we create a for loop to visualize all the species and all the variables 
+Now we create a for loop to visualize all the species and all the variables 
 ```{r, eval=TRUE}
 v1 <- c("Plant_height", "Leaf_width", "Leaf_length", "Leaf_area", "Leaf_number", "Root_length", "Chlorophyll_content", "Soil_humidity", "Electrical_conductivity")
 i <- "Beta vulgaris"
@@ -69,15 +76,11 @@ for(i in levels(as.factor(d0$Species))) {
 
 ```
 
-```
 ## Chapter 3 - ANOVA
-##### For the third part of this project, we will advance with statistical calculations. For this we used multiple packages including ggplot2", "ggpubr", "tidyverse", "broom" and "AICcmodavg". Now that we have seen all the variables and the difference for species over time, we can choose which week is better for demonstrating each one of them based on which week shows the most change.  
+For the third part of this project, we will advance with statistical calculations. For this we used multiple packages including ggplot2", "ggpubr", "tidyverse", "broom" and "AICcmodavg". Now that we have seen all the variables and the difference for species over time, we can choose which week is better for demonstrating each one of them based on which week shows the most change.  
 
-111
-
-##### Linear model 
-#### Plant Height
-Most visual difference is in week 6 (w6)
+##### Plant Height
+For the plant height variable the most visual difference is present in week 6 (w6)
 ```{r, fig.width=10}
 d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Plant_height") ]
 d1 <- na.exclude(d1) #remove the ones with empty cells 
@@ -91,6 +94,7 @@ ggplot(d1, aes(x= Treatment, y= Plant_height, fill= Species)) +
 ```
 
 ##### Leaf number 
+For the leaf number variable we have chosen the weeks XX  because ??
 ###### Week 1
 ```{r, fig.width=10}
 d1 <- d0[d0$Week == "W1" , c("Treatment", "Species", "Leaf_number") ]
@@ -116,6 +120,7 @@ ggplot(d1, aes(x= Treatment, y= Leaf_number, fill= Species)) +
 ```
 
 ##### Leaf length
+For the leaf length variable we have chosen the weeks XX  because ??
 ###### Week 1
 ```{r, fig.width=10}
 d1 <- d0[d0$Week == "W1" , c("Treatment", "Species", "Leaf_length") ]
@@ -141,6 +146,7 @@ ggplot(d1, aes(x= Treatment, y= Leaf_length, fill= Species)) +
 ```
 
 ##### Leaf width
+For the leaf width variable we have chosen the weeks XX  because ??
 ###### Week 1
 ```{r, fig.width=10}
 d1 <- d0[d0$Week == "W1" , c("Treatment", "Species", "Leaf_width") ]
@@ -166,6 +172,7 @@ ggplot(d1, aes(x= Treatment, y=Leaf_width, fill= Species)) +
 ```
 
 ##### Leaf area
+For the leaf area variable we have chosen the weeks XX  because ??
 ###### Week 1
 ```{r, fig.width=10}
 d1 <- d0[d0$Week == "W1" , c("Treatment", "Species", "Leaf_area") ]
@@ -191,6 +198,7 @@ ggplot(d1, aes(x= Treatment, y=Leaf_area, fill= Species)) +
 ```
 
 ##### Chlorophyll content
+For the leaf chlorophyll content variable we have chosen the weeks XX  because ??
 ###### Week 3
 ```{r, fig.width=10}
 d1 <- d0[d0$Week == "W3" , c("Treatment", "Species", "Chlorophyll_content") ]
@@ -237,6 +245,7 @@ ggplot(d1, aes(x= Treatment, y=Chlorophyll_content, fill= Species)) +
 ```
 
 ##### Aerial fresh weight 
+For the aerial fresh weight variable, the data was is just present in week 6 since it required the depotting of the plant samples.
 ```{r, fig.width=10}
 d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Aerial_fresh_weight") ]
 d1 <- na.exclude(d1) #remove the ones with empty cells 
@@ -251,6 +260,7 @@ ggplot(d1, aes(x= Treatment, y=Aerial_fresh_weight, fill= Species)) +
 ```
 
 ##### Aerial dry weight 
+For the aerial dry weight variable, the data was is just present in week 6 since it required the depotting of the plant samples and the drying of the fresh weight.
 ```{r, fig.width=10}
 d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Aerial_dry_weight") ]
 d1 <- na.exclude(d1) #remove the ones with empty cells 
@@ -265,6 +275,7 @@ ggplot(d1, aes(x= Treatment, y=Aerial_dry_weight, fill= Species)) +
 ```
 
 ##### Root length
+For the root lenght variable, the data was is just present and measure for week 6.
 ```{r, fig.width=10}
 d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Root_length") ]
 d1 <- na.exclude(d1) #remove the ones with empty cells 
@@ -278,21 +289,11 @@ ggplot(d1, aes(x= Treatment, y=Root_length, fill= Species)) +
 
 ```
 
+## Chapter 4 - PCA analysis
+In this chapter we move foward with the statistical analysis by doing a PCA analysis for the data.
 
-## part3: PCA analysis
-in this part we are going to do a PCA analysis for the data
 
-```{r}
-
-#importing data
-
-#we already imported the data in the previous parts, that's why the functions of importing the data are commented
-
-#readxl::read_excel("data_dec/water_stress.xlsx")
-#d0 <- readxl::read_excel("data_dec/water_stress.xlsx", sheet = "Data")
-```
-
-Next we need to make a subset for the data with only numerical variables and exclude the other variables, scale the data and after that we will exclude all the missing data
+To start, we need to make a subset for the data with only numerical variables and exclude the other variables, scale the data and after that we will exclude all the missing data
 ```{r}
 PCA_data <- d0[c(8:9, 11:21)]
 PCA_data_scaled <- as.data.frame(scale(PCA_data))
@@ -304,14 +305,14 @@ PCA_data01 <- na.exclude(PCA_data_scaled)
 
 ```
 
- now we are going to do a PCA of the data
+Now we are going to do a PCA of the data
  
 ```{r}
 PCA <- prcomp(PCA_data01, scale = FALSE)
 print(PCA)
 ```
  
-now we will plot the PCA results
+Now we will plot the PCA results
 ```{r}
 # Plotting the PCA results
 # install.packages("factoextra") 
