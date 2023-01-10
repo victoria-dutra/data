@@ -19,16 +19,11 @@ install.packages("ggplot2", dependencies = TRUE)
 
 # Chapter 1 - Inicial dealing with data
 ##### The initial step is the aggregation of all data from the groups (1-5) in a shared Excel file on Google Drive. This document should be downloaded as an excel sheet named "Data", in this project's repository folder. In order to import this data we used the package "readxl".
-
-##### Visualization of data with plots.
 ```{r}
 readxl::read_excel("data_dec/water_stress.xlsx")
 d0 <- readxl::read_excel("data_dec/water_stress.xlsx", sheet = "Data")
 ```
-
-after importing the data and give it the name of d0, we are going to visualize it, by creation different plots.
-
-
+##### After importing the data, we give it the name of d0, we are going to visualize it, by creating different plots.
 ##Visualization of data with plots. 
 Create many plots.
 
