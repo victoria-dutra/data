@@ -1,10 +1,70 @@
 ---
 title: "final R markdown 10_01_2023"
 author: "oussama, julie, vectoria"
-date: "2023-01-10"
-output: html_document
+date: '`r Sys.Date()`'
+output: 
+    html_document:
+    code_folding: hide           
+    highlight: tango             
+    toc: yes                    
+    toc_depth: 6 
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+# install.packages("readxl", dependencies = TRUE)
+# install.packages("ggplot2", dependencies = TRUE)
+# install.packages(c("ggplot2", "ggpubr", "tidyverse", "broom", "AICcmodavg"), , dependencies = TRUE)
+library(ggplot2)
+library(ggpubr)
+library(tidyverse)
+library(broom)
+library(ggplot2)
 ```
+
+#### This file is regarding the results for the water stress green house experiment - Group 5
+
+## Chapter 1 - Downloading the data
+> The initial step is the aggregation of all data from the groups (1-5) in a shared Excel file on Google Drive. This document should be downloaded as an excel sheet named "Data", in this project's repository folder. In order to import this data we used the package "readxl".
+
+```{r}
+readxl::read_excel("data_dec/water_stress.xlsx")
+d0 <- readxl::read_excel("data_dec/water_stress.xlsx", sheet = "Data")
+```
+
+> After importing the data, we give it the name of d0. Next step is to visualize it, by creating different plots.
+
+## Chapter 2 - Visualization of data with plots. 
+>In this step we want to create many plots in order to better visualize the data.
+We will use X= Date and Y= Variable (Y1= Plant height ; Y2= Leaf number ; Y3= Leaf lenght ; Y4= Leaf width ; Y5= Leaf area ; Y7= Chlorophyll )
+
+the code used for this step is : 
+ggplot(d0, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) + 
+  geom_line()+
+  facet_grid(Species ~.)
+  
+> This next code chunk is meant to help visualize only soil humidity for two species (Solanum lycopersicum and lolium perenne) and script on how to plot it
+```{r}
+# For Solanum lycopersicum
+
+s1 <- d0[d0$Species=="Solanum lycopersicum",]
+ggplot(s1, aes(x= Week, y= Soil_humidity, group= PlantId, color= Treatment)) + 
+  geom_line()
+  
+# For 	Lolium perenne
+s2 <- d0[d0$Species=="Lolium perenne",]
+ggplot(s2, aes(x= Week, y= Soil_humidity, group= PlantId, color= Treatment)) + 
+  geom_line() 
+```
+
+
+> This next code chunk is meant to help visualize only the variable "Plant_height" for the species (Raphanus sativus) and script on how to plot it
+
+```{r}
+# For 	Raphanus sativus
+
+s3 <- d0[d0$Species=="Raphanus sativus",]
+ggplot(s3, aes(x= Week, y= Plant_height, group= PlantId, color= Treatment)) + 
+  geom_line()
+```
+
