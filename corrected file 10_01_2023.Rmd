@@ -69,9 +69,9 @@ for(i in levels(as.factor(d0$Species))) {
 
 ```
 
-```
 ## Chapter 3 - ANOVA
-##### For the third part of this project, we will advance with statistical calculations. For this we used multiple packages including ggplot2", "ggpubr", "tidyverse", "broom" and "AICcmodavg". Now that we have seen all the variables and the difference for species over time, we can choose which week is better for demonstrating each one of them based on which week shows the most change.  
+
+> For the third part of this project, we will advance with statistical calculations. For this we used multiple packages including ggplot2", "ggpubr", "tidyverse", "broom" and "AICcmodavg". Now that we have seen all the variables and the difference for species over time, we can choose which week is better for demonstrating each one of them based on which week shows the most change.  
 
 111
 
