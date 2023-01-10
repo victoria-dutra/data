@@ -4,14 +4,21 @@ author: "oussama, julie, vectoria"
 date: "2023-01-10"
 output:
     html_document:
-    code_folding: hide           
-    highlight: tango             
-    toc: yes                    
+    code_folding: hide         # Fold the code
+    highlight: tango          # Code format 
+    toc: yes                  # Table of contents  
     toc_depth: 6 
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+if (!dir.exists("results")) dir.create("results")  # create folder if necessary
+knitr::opts_chunk$set(
+  results = 'markup',               # nice results format
+  fig.path = "results/",            # Folder for figures
+  dev = "png",                      # png format for figures
+  dev.args = list(type = "cairo"),  # png args. Improves png
+  dpi = 100                         # 100 for working, 300 for publication
+)
 ```
 ### This file is regarding the preliminary results for the water stress green house experiment - Group 5
 
