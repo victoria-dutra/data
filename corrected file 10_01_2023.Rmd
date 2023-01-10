@@ -12,8 +12,8 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-install.packages("readxl", dependencies = TRUE)
-install.packages("ggplot2", dependencies = TRUE)
+# install.packages("readxl", dependencies = TRUE)
+# install.packages("ggplot2", dependencies = TRUE)
 ```
 ### This file is regarding the results for the water stress green house experiment - Group 5
 
@@ -25,6 +25,7 @@ d0 <- readxl::read_excel("data_dec/water_stress.xlsx", sheet = "Data")
 ```
 ##### After importing the data, we give it the name of d0, we are going to visualize it, by creating different plots.
 ##Visualization of data with plots. 
+
 Create many plots.
 
 X= Date 
