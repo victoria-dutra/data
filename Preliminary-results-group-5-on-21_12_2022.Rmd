@@ -1,26 +1,14 @@
 ---
-title: "Corrected R file 10/01/2022"
-author: "Oussama, Julie, Victória"
-date: "2023-01-10"
-output:
-    html_document:
-    code_folding: hide         # Fold the code
-    highlight: tango          # Code format 
-    toc: yes                  # Table of contents  
-    toc_depth: 6 
+title: "Preliminary results group 5 21/12/2022"
+author: "oussama, julie, vectoria"
+date: "2022-12-21"
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
-<<<<<<< HEAD
-if (!dir.exists("results")) dir.create("results")  # create folder if necessary
-knitr::opts_chunk$set(
-  results = 'markup',               # nice results format
-  fig.path = "results/",            # Folder for figures
-  dev = "png",                      # png format for figures
-  dev.args = list(type = "cairo"),  # png args. Improves png
-  dpi = 100                         # 100 for working, 300 for publication
-)
+knitr::opts_chunk$set(echo = TRUE)
 ```
+
 ### This file is regarding the preliminary results for the water stress green house experiment - Group 5
 
 # Chapter 1 - First dealing with data
@@ -36,11 +24,7 @@ d0 <- readxl::read_excel("data_dec/water_stress.xlsx", sheet = "Data")
 after importing the data and give it the name of d0, we are going to visualize it, by creation different plots.
 
 
-=======
-##### After importing the data, we give it the name of d0. Next step is to visualize it, by creating different plots.
->>>>>>> 2a1ebc6370117dc510c991128a96993577769c17
 ##Visualization of data with plots. 
-
 Create many plots.
 
 X= Date 
