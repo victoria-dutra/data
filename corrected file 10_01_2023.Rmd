@@ -1,0 +1,10 @@
+---
+title: "corrected R file 10/01/2022"
+author: "oussama, julie, vectoria"
+date: "2023-01-10"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
