@@ -2,7 +2,12 @@
 title: "corrected R file 10/01/2022"
 author: "oussama, julie, vectoria"
 date: "2023-01-10"
-output: html_document
+output:
+    html_document:
+    code_folding: hide           
+    highlight: tango             
+    toc: yes                    
+    toc_depth: 6 
 ---
 
 ```{r setup, include=FALSE}
