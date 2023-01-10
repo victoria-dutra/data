@@ -14,10 +14,16 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 # install.packages("readxl", dependencies = TRUE)
 # install.packages("ggplot2", dependencies = TRUE)
+# install.packages(c("ggplot2", "ggpubr", "tidyverse", "broom", "AICcmodavg"), , dependencies = TRUE)
+library(ggplot2, dependencies = TRUE)
+library(ggpubr, dependencies = TRUE)
+library(tidyverse, dependencies = TRUE)
+library(broom, dependencies = TRUE)
+library(ggplot2, dependencies = TRUE)
 ```
 #### This file is regarding the results for the water stress green house experiment - Group 5
 
-# Chapter 1 - Inicial dealing with data
+## Chapter 1 - Downloading the data
 ##### The initial step is the aggregation of all data from the groups (1-5) in a shared Excel file on Google Drive. This document should be downloaded as an excel sheet named "Data", in this project's repository folder. In order to import this data we used the package "readxl".
 ```{r}
 readxl::read_excel("data_dec/water_stress.xlsx")
@@ -25,27 +31,18 @@ d0 <- readxl::read_excel("data_dec/water_stress.xlsx", sheet = "Data")
 ```
 ##### After importing the data, we give it the name of d0. Next step is to visualize it, by creating different plots.
 
-### Visualization of data with plots. 
+## Chapter 2 - Visualization of data with plots. 
 ##### In this step we want to create many plots in order to better visualize the data.
+##### We will use X= Date and Y= Variable (Y1= Plant height ; Y2= Leaf number ; Y3= Leaf lenght ; Y4= Leaf width ; Y5= Leaf area ; Y7= Chlorophyll ) 
 
-X= Date 
-Y= Variable (Y1= Plant height ; Y2= Leaf number ; Y3= Leaf lenght ; Y4= Leaf width ; Y5= Leaf area ; Y7= Chlorophyll ) 
-
-
+##### First plot with all species
 ```{r, fig.height=15}
-# install.packages("ggplot2", dependencies = TRUE)
-library(ggplot2)
-
-# first we are going to visualize all the species in a plot
 ggplot(d0, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) + 
   geom_line()+
   facet_grid(Species ~.)
-
 ```
 
-
-
-in this code chunk we are try to visualize one species, to know how to plot it first
+##### This next code chunk is meant to help visualize only one species (Solanum lycopersicum) and script on how to plot it
 ```{r}
 # For Solanum lycopersicum
 s1 <- d0[d0$Species=="Solanum lycopersicum",]
@@ -53,8 +50,7 @@ ggplot(s1, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) +
   geom_line()
 ```
 
-then we will create a for loop to visualize all the species and all the variables 
-
+##### Now we create a for loop to visualize all the species and all the variables 
 ```{r, eval=TRUE}
 v1 <- c("Plant_height", "Leaf_width", "Leaf_length", "Leaf_area", "Leaf_number", "Root_length", "Chlorophyll_content", "Soil_humidity", "Electrical_conductivity")
 i <- "Beta vulgaris"
@@ -74,27 +70,11 @@ for(i in levels(as.factor(d0$Species))) {
 ```
 
 ```
-
-## Chapter 2 - ANOVA
-in this part we are trying to do an ANOVA analysis for the data
-
-```{r}
-#Packages
-#install.packages(c("ggplot2", "ggpubr", "tidyverse", "broom", "AICcmodavg"), , dependencies = TRUE)
-library(ggplot2)
-library(ggpubr)
-library(tidyverse)
-library(broom)
-
-#Import data
-d0 <- readxl::read_excel("data_dec/water_stress.xlsx", sheet = "Data")
-d0
-names(d0)
-```
-
+## Chapter 3 - ANOVA
+##### For the third part of this project, we will advance with statistical calculations. For this we used multiple packages including ggplot2", "ggpubr", "tidyverse", "broom" and "AICcmodavg". Now that we have seen all the variables and the difference for species over time, we can choose which week is better for demonstrating each one of them based on which week shows the most change.  
 
 ##### Linear model 
-##### Plant Height 
+#### Plant Height
 Most visual difference is in week 6 (w6)
 ```{r, fig.width=10}
 d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Plant_height") ]
