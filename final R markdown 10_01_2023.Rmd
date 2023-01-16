@@ -20,6 +20,7 @@ library(ggpubr)
 library(tidyverse)
 library(broom)
 library(ggplot2)
+library(agricolae)
 ```
 
 #### This file is regarding the results for the water stress green house experiment - Group 5
@@ -82,7 +83,7 @@ ggplot(s3, aes(x= Week, y= Plant_height, group= PlantId, color= Treatment)) +
 
 # Chapter 3 - ANOVA
 
-> For the third part of this project, we will advance with statistical calculations. For this we used multiple packages including ggplot2", "ggpubr", "tidyverse", "broom" and "AICcmodavg". Now that we have seen all the variables and the difference for species over time, as we said before we can have chosen  the week 6 to do the analyses.
+> For the third part of this project, we will advance with statistical calculations. For this we used multiple packages including ggplot2", "ggpubr", "tidyverse", "broom" and "AICcmodavg". Now that we have seen all the variables and the difference for species over time, as we said before we have chosen  the week 6 to do the analyses.
 
 ## Linear model 
 ### Plant Height
@@ -97,9 +98,11 @@ lm1 <- lm(Plant_height ~ Treatment + Species, data=d1)
 anova(lm1)
 
 
-#second try
+# Performing  Tukey HSD analysis
 
-rl <- length(levels(as.factor(d0$Species)))*3
+# the objective here is create a table using a for loop function, and fill it with the results of Tukey HSD (letters), and automatically assign these letters to the box plots for each species. 
+
+rl <- length(levels(as.factor(d0$Species)))*3  #number of rows
 
 df0 <- data.frame(Treatment = character(), Species = character(), Letters = character())
 df0[1:rl,] <- NA
@@ -110,17 +113,15 @@ for (i in levels(as.factor(d0$Species))) {
 
 d2 <- d1[d1$Species == i,]
 
-
 model <- aov(Plant_height~Treatment, data =d2 )
 
-
-hsd <-HSD.test(model, "Treatment")
+hsd <- HSD.test(model, "Treatment")
 
 df0$Treatment[k:(k+2)] <- row.names(hsd$groups)
 df0$Species [k:(k+2)] <- i
 df0$Letters [k:(k+2)] <- hsd$groups$groups
 
-k <- k+3 
+k <- k+3  
 }
 
 
@@ -133,16 +134,3 @@ ggplot(d1, aes(x= Treatment, y= Plant_height, fill= Species)) +
   geom_text(data =df0 , aes(y = 85, label = Letters))
 
 ```
-
-
-  
-  
-  
-  
-<!-- library(emmeans) -->
-<!-- library(multcomp) -->
-
-<!-- ( cld_dat = as.data.frame( cld(emmeans(model, ~Treatment+Species), -->
-<!--                    Letters = letters ) ) ) -->
-
-
