@@ -224,7 +224,7 @@ ggplot(d1, aes(x= Treatment, y= Leaf_number, fill= Species)) +
   geom_text(data =df0 , aes(y = 39, label = Letters))
 ```
 
-###Leaf_length
+### Leaf_length
 
 ```{r, fig.width=10, echo=FALSE, results = FALSE, message=FALSE, warning=FALSE}
 #performing the ANOVA analysis
@@ -269,7 +269,7 @@ ggplot(d1, aes(x= Treatment, y= Leaf_length, fill= Species)) +
   geom_text(data =df0 , aes(y = 48, label = Letters))
 ```
 
-###Leaf_width
+### Leaf_width
 
 ```{r, fig.width=10, echo=FALSE, results = FALSE, message=FALSE, warning=FALSE}
 #performing the ANOVA analysis
@@ -315,7 +315,7 @@ ggplot(d1, aes(x= Treatment, y= Leaf_width, fill= Species)) +
 ```
 
 
-###Leaf_area
+### Leaf_area
 
 ```{r, fig.width=10, echo=FALSE, results = FALSE, message=FALSE, warning=FALSE}
 #performing the ANOVA analysis
@@ -448,7 +448,7 @@ ggplot(d1, aes(x= Treatment, y= Aerial_fresh_weight, fill= Species)) +
   geom_boxplot() +
   facet_grid(. ~ Species) +
   theme(strip.text.x = element_text(size=0)) +
-  geom_text(data =df0 , aes(y = 130, label = Letters))
+  geom_text(data =df0 , aes(y = 35, label = Letters))
 ```
 
 ### Aerial_dry_weight
@@ -493,7 +493,7 @@ ggplot(d1, aes(x= Treatment, y= Aerial_dry_weight, fill= Species)) +
   geom_boxplot() +
   facet_grid(. ~ Species) +
   theme(strip.text.x = element_text(size=0)) +
-  geom_text(data =df0 , aes(y = 130, label = Letters))
+  geom_text(data =df0 , aes(y = 3, label = Letters))
 ```
 
 ### Root_length
@@ -584,7 +584,7 @@ ggplot(d1, aes(x= Treatment, y= Roots_fresh_weight, fill= Species)) +
   geom_boxplot() +
   facet_grid(. ~ Species) +
   theme(strip.text.x = element_text(size=0)) +
-  geom_text(data =df0 , aes(y = 130, label = Letters))
+  geom_text(data =df0 , aes(y = 18, label = Letters))
 ```
 
 ### Roots_dry_weight
@@ -629,6 +629,8 @@ ggplot(d1, aes(x= Treatment, y= Roots_dry_weight, fill= Species)) +
   geom_boxplot() +
   facet_grid(. ~ Species) +
   theme(strip.text.x = element_text(size=0)) +
-  geom_text(data =df0 , aes(y = 20, label = Letters))
+  geom_text(data =df0 , aes(y = 1.25, label = Letters))
 ```
 
+## PCA:
+> in this part we are going to do a PCA analysis for the data
