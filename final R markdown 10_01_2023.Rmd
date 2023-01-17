@@ -12,8 +12,7 @@ output:
 
 ```{r setup, include=FALSE}
 if (!dir.exists("results")) dir.create("results")  # create folder if necessary
-knitr::opts_chunk$set(
-  results = 'markup',               # nice results format
+knitr::opts_chunk$set(              # nice results format
   fig.path = "results22/",            # Folder for figures
   dev = "png",                      # png format for figures
   dev.args = list(type = "cairo"),  # png args. Improves png

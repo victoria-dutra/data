@@ -6,7 +6,14 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+if (!dir.exists("results")) dir.create("results")  # create folder if necessary
+knitr::opts_chunk$set(
+  results = 'markup',               # nice results format
+  fig.path = "results22/",            # Folder for figures
+  dev = "png",                      # png format for figures
+  dev.args = list(type = "cairo"),  # png args. Improves png
+  dpi = 100                         # 100 for working, 300 for publication
+)
 ```
 
 ### This file is regarding the preliminary results for the water stress green house experiment - Group 5
