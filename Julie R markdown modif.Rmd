@@ -21,83 +21,110 @@ library(agricolae)
 #### This file is regarding the results for the water stress green house experiment - Group 5
 
 ## Chapter 1 - Downloading the data
-> The initial step is the aggregation of all data from the groups (1-5) in a shared Excel file on Google Drive. This document should be downloaded as an excel sheet named "Data", in this project's repository folder. In order to import this data we used the package "readxl".
+
+> The initial step is the aggregation of all data from the groups (1-5) in a shared Excel file on Google Drive. The dataframe is directly downloaded from GoogleDrive with the package 'gsheet' and named d0. Prior installation of Rtools in the right version of R is necessary to use this package.
 
 ```{r}
-install.packages('gsheet')  
+#install.packages('Rtools')
+#install.packages('gsheet')  
 library(gsheet) 
-data <- gsheet2tbl('https://docs.google.com/spreadsheets/d/1WM6hDgwCFxbLpT37HLzU-iYZAEGBdHP6CpU8BDwWmZc/edit#gid=0', sheet = "Data")
+d0 <- gsheet2tbl('https://docs.google.com/spreadsheets/d/1WM6hDgwCFxbLpT37HLzU-iYZAEGBdHP6CpU8BDwWmZc/edit#gid=0', sheet = "Data")
 ```
 
 
-> After importing the data, we give it the name of d0. Next step is to visualize it, by creating different plots.
+> After importing the data, next step is to visualize it, by creating different plots.
 
 ## Chapter 2 - Visualization of data with plots. 
->In this step we want to create many plots in order to better visualize the data.
-We will use X= Date and Y= Variable (Y1= Plant height ; Y2= Leaf number ; Y3= Leaf lenght ; Y4= Leaf width ; Y5= Leaf area ; Y7= Chlorophyll )
 
-**the code used for this step is : 
-ggplot(d0, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) + 
-  geom_line()+
+>In this step we want to create many plots in order to better visualize the data.
+We will use X= Date and Y= Variable (Y1= Plant height ; Y2= Leaf number ; Y3= Leaf lenght ; Y4= Leaf width ; Y5= Leaf area ; Y7= Chlorophyll).
+
+**The code used for this step is : 
+ggplot(d0, aes(x= Date, y =Plant_height, group= PlantId, color= Treatment)) + 
+  geom_line() +
   facet_grid(Species ~.)**
   
   
-##findings
-  > after seeing all the charts, we selected the ones below because:
+### Findings
+  > After seeing all the charts, we selected only the ones below because:
   
-  > *  we want to make the R markdown file visually appealing by avoiding plotting all variables for all species.
+  > *  we want to make the R markdown file visually appealing by avoiding plotting all variables for all species;
   
   > *  we consider the graphs below representative of the general trends observed in the other species and variables.
   
   > *  we have chosen to analyze the data for week 6, because the effect of the water stress deficit is clearer for this week. 
   
   
-> This next code chunk is meant to help visualize only soil humidity for two species (Solanum lycopersicum and lolium perenne) and script on how to plot it
+> In order to get a better understanding of the variability between weeks, the group chose to explore 2 main graphs for soil parameters, one cultivated species (Solanum lycopersicum) and one wild species (Lolium perenne?). The following chunk is performing the visual representation.
 
 ```{r}
 # For Solanum lycopersicum
 
+library(viridis)
+
 s1 <- d0[d0$Species=="Solanum lycopersicum",]
 ggplot(s1, aes(x= Week, y= Soil_humidity, group= PlantId, color= Treatment)) + 
-  geom_line()
-  
+  geom_line() +
+  labs(title = 'Figure 1: Evolution of the soil humidity of Solanum lycopersicum on 6 weeks') +
+  theme_pubclean() +
+  scale_color_viridis(discrete = TRUE)
+```
+
+```{r}
 # For 	Lolium perenne
 s2 <- d0[d0$Species=="Lolium perenne",]
 ggplot(s2, aes(x= Week, y= Soil_humidity, group= PlantId, color= Treatment)) + 
-  geom_line() 
+  geom_line() +
+  labs(title = 'Figure 2: Evolution of the soil humidity of Lolium perenne on 6 weeks') +
+  theme_pubclean() +
+  scale_color_viridis(discrete = TRUE)
 ```
 
+> It is visible in both graphs that at week 6 shows the most contrast between treatments (control, intermediate, and water stress). The wild species seems to reduce its humidity in a steadier pace than the cultivated species. On the other hand, the soil humidity of S. lycopersicum dropped sharply following the treatments intermediate and stress. 
 
-> This next code chunk is meant to help visualize only the variable "Plant_height" for the species (Raphanus sativus) and script on how to plot it 
+> The next code chunk is meant to help visualize the pattern we have by taking only the variable "Plant_height" and the species Raphanus sativus. This species was the most representative species to assess the plant height by treatment, and the plant height appeared to be the best variable to extrapolate the stress level of the plant. 
 
 ```{r}
 # For 	Raphanus sativus
 
 s3 <- d0[d0$Species=="Raphanus sativus",]
 ggplot(s3, aes(x= Week, y= Plant_height, group= PlantId, color= Treatment)) + 
-  geom_line()
+  geom_line() +
+  labs(title = 'Figure 3: Evolution of the plant height of Raphanus sativus on 6 weeks') +
+  theme_pubclean() +
+  scale_color_viridis(discrete = TRUE)
 ```
+
+> It appears that the treatment has an influence on the height of the plant. In week 2 we can see the difference clearly between the well-watered and the water-stressed plants where the plant height is increasing in control and intermediate but decreasing under stress conditions. The following weeks evolution depends a lot on the repetition, and the variability belong them is high. Week 6 is determining the influence of the treatment on radish growth: it will peak above 20cm for the well-watered plants, between 15 and 20cm for the intermediate treated plants, and on average 15cm for the water-stressed plants.
+
+> For the third part of this project, we will advance with statistical analyses. For this we will use multiple packages including "ggplot2", "ggpubr", "tidyverse", "broom" and "AICcmodavg". Now that we have seen all the variables and the difference for species over time, as we will focus on Week 6 because it appeared to be the most deciding week.
 
 # Chapter 3 - ANOVA
 
-> For the third part of this project, we will advance with statistical calculations. For this we used multiple packages including ggplot2", "ggpubr", "tidyverse", "broom" and "AICcmodavg". Now that we have seen all the variables and the difference for species over time, as we said before we have chosen  the week 6 to do the analyses.
+> To compare the mean values of more than two groups we use an ANOVA (Analyse of Variance). Notice that to do so we made three assumptions on the data: (1) the responses for each factor level have a normal population distribution, (2) these distributions have the same variance, (3) the data are independent. 
+
+> First the ANOVA uses a linear model and so in R it needs the function lm() to perform. Next the ANOVA will need a test of significance - in addition to the ANOVA test - to determine the relationship between the sets of data. Here The Tukey HSD ("honest significant difference") test will specify (with letters) the pair of data that causes the difference. 
 
 ## Linear model 
+
+>  We are going to present every variable that we selected to compare all species. Those 11 variables are: Plant height, Leaf number, Leaf length, Leaf width, Leaf area, Chlorophyll content, Aerial fresh weight, Aerial dry weight, Root length, Roots fresh weight, Roots dry weight.
+
 ### Plant Height
+
+> 
 
 ```{r, fig.width=10}
 
-#performing the ANOVA analysis
+# Performing the ANOVA analysis
 
 d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Plant_height") ]
 d1 <- na.exclude(d1) #remove the ones with empty cells 
 lm1 <- lm(Plant_height ~ Treatment + Species, data=d1)
 anova(lm1)
 
-
 # Performing  Tukey HSD analysis
 
-# the objective here is create a table using a for loop function, and fill it with the results of Tukey HSD (letters), and automatically assign these letters to the box plots for each species. 
+# The objective here is create a table using a for loop function, and fill it with the results of Tukey HSD (letters), and automatically assign these letters to the box plots for each species. 
 
 rl <- length(levels(as.factor(d0$Species)))*3  #number of rows
 
@@ -132,6 +159,7 @@ ggplot(d1, aes(x= Treatment, y= Plant_height, fill= Species)) +
 
 ```
 
+> 
 
 ### Soil_humidity
 ```{r, fig.width=10, echo=FALSE, results = FALSE, message=FALSE, warning=FALSE}
@@ -357,8 +385,8 @@ ggplot(d1, aes(x= Treatment, y= Leaf_area, fill= Species)) +
   geom_text(data =df0 , aes(y = 130, label = Letters))
 ```
 
-
 ### Chlorophyll_content
+
 ```{r, fig.width=10, echo=FALSE, results = FALSE, message=FALSE, warning=FALSE}
 # 
 # #performing the ANOVA analysis
