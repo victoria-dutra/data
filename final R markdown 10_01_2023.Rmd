@@ -137,7 +137,7 @@ ggplot(d1, aes(x= Treatment, y= Plant_height, fill= Species)) +
 
 
 ### Soil_humidity
-```{r, fig.width=10}
+```{r, fig.width=10, echo=FALSE, results = FALSE, message=FALSE, warning=FALSE}
 #performing the ANOVA analysis
 
 d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Soil_humidity") ]
@@ -181,7 +181,7 @@ ggplot(d1, aes(x= Treatment, y= Soil_humidity, fill= Species)) +
 ```
 
 ### Leaf_number
-```{r, fig.width=10}
+```{r, fig.width=10, echo=FALSE, results = FALSE, message=FALSE, warning=FALSE}
 #performing the ANOVA analysis
 
 d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Leaf_number") ]
@@ -226,7 +226,7 @@ ggplot(d1, aes(x= Treatment, y= Leaf_number, fill= Species)) +
 
 ###Leaf_length
 
-```{r, fig.width=10}
+```{r, fig.width=10, echo=FALSE, results = FALSE, message=FALSE, warning=FALSE}
 #performing the ANOVA analysis
 
 d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Leaf_length") ]
@@ -271,7 +271,7 @@ ggplot(d1, aes(x= Treatment, y= Leaf_length, fill= Species)) +
 
 ###Leaf_width
 
-```{r, fig.width=10}
+```{r, fig.width=10, echo=FALSE, results = FALSE, message=FALSE, warning=FALSE}
 #performing the ANOVA analysis
 
 d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Leaf_width") ]
@@ -317,7 +317,7 @@ ggplot(d1, aes(x= Treatment, y= Leaf_width, fill= Species)) +
 
 ###Leaf_area
 
-```{r, fig.width=10}
+```{r, fig.width=10, echo=FALSE, results = FALSE, message=FALSE, warning=FALSE}
 #performing the ANOVA analysis
 
 d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Leaf_area") ]
@@ -362,7 +362,7 @@ ggplot(d1, aes(x= Treatment, y= Leaf_area, fill= Species)) +
 
 
 ### Chlorophyll_content
-```{r, fig.width=10}
+```{r, fig.width=10, echo=FALSE, results = FALSE, message=FALSE, warning=FALSE}
 # 
 # #performing the ANOVA analysis
 # 
@@ -408,7 +408,7 @@ ggplot(d1, aes(x= Treatment, y= Leaf_area, fill= Species)) +
 
 ### Aerial_fresh_weight
 
-```{r, fig.width=10}
+```{r, fig.width=10, echo=FALSE, results = FALSE, message=FALSE, warning=FALSE}
 #performing the ANOVA analysis
 
 d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Aerial_fresh_weight") ]
@@ -453,7 +453,7 @@ ggplot(d1, aes(x= Treatment, y= Aerial_fresh_weight, fill= Species)) +
 
 ### Aerial_dry_weight
 
-```{r, fig.width=10}
+```{r, fig.width=10, echo=FALSE, results = FALSE, message=FALSE, warning=FALSE}
 #performing the ANOVA analysis
 
 d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Aerial_dry_weight") ]
@@ -498,7 +498,7 @@ ggplot(d1, aes(x= Treatment, y= Aerial_dry_weight, fill= Species)) +
 
 ### Root_length
 
-```{r, fig.width=10}
+```{r, fig.width=10, echo=FALSE, results = FALSE, message=FALSE, warning=FALSE}
 # 
 # #performing the ANOVA analysis
 # 
@@ -544,7 +544,7 @@ ggplot(d1, aes(x= Treatment, y= Aerial_dry_weight, fill= Species)) +
 
 ### Roots_fresh_weight
 
-```{r, fig.width=10}
+```{r, fig.width=10, echo=FALSE, results = FALSE, message=FALSE, warning=FALSE}
 #performing the ANOVA analysis
 
 d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Roots_fresh_weight") ]
@@ -589,7 +589,7 @@ ggplot(d1, aes(x= Treatment, y= Roots_fresh_weight, fill= Species)) +
 
 ### Roots_dry_weight
 
-```{r, fig.width=10}
+```{r, fig.width=10, echo=FALSE, results = FALSE, message=FALSE, warning=FALSE}
 #performing the ANOVA analysis
 
 d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Roots_dry_weight") ]
@@ -629,6 +629,6 @@ ggplot(d1, aes(x= Treatment, y= Roots_dry_weight, fill= Species)) +
   geom_boxplot() +
   facet_grid(. ~ Species) +
   theme(strip.text.x = element_text(size=0)) +
-  geom_text(data =df0 , aes(y = 130, label = Letters))
+  geom_text(data =df0 , aes(y = 20, label = Letters))
 ```
 
