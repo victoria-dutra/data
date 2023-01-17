@@ -362,7 +362,7 @@ ggplot(d1, aes(x= Treatment, y= Leaf_area, fill= Species)) +
 
 
 ### Chlorophyll_content
-```{r}
+```{r, fig.width=10}
 # 
 # #performing the ANOVA analysis
 # 
@@ -408,7 +408,7 @@ ggplot(d1, aes(x= Treatment, y= Leaf_area, fill= Species)) +
 
 ### Aerial_fresh_weight
 
-```{r}
+```{r, fig.width=10}
 #performing the ANOVA analysis
 
 d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Aerial_fresh_weight") ]
@@ -453,7 +453,7 @@ ggplot(d1, aes(x= Treatment, y= Aerial_fresh_weight, fill= Species)) +
 
 ### Aerial_dry_weight
 
-```{r}
+```{r, fig.width=10}
 #performing the ANOVA analysis
 
 d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Aerial_dry_weight") ]
@@ -498,7 +498,7 @@ ggplot(d1, aes(x= Treatment, y= Aerial_dry_weight, fill= Species)) +
 
 ### Root_length
 
-```{r}
+```{r, fig.width=10}
 # 
 # #performing the ANOVA analysis
 # 
@@ -544,7 +544,7 @@ ggplot(d1, aes(x= Treatment, y= Aerial_dry_weight, fill= Species)) +
 
 ### Roots_fresh_weight
 
-```{r}
+```{r, fig.width=10}
 #performing the ANOVA analysis
 
 d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Roots_fresh_weight") ]
@@ -589,7 +589,7 @@ ggplot(d1, aes(x= Treatment, y= Roots_fresh_weight, fill= Species)) +
 
 ### Roots_dry_weight
 
-```{r}
+```{r, fig.width=10}
 #performing the ANOVA analysis
 
 d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Roots_dry_weight") ]
