@@ -1,0 +1,148 @@
+---
+title: "final R markdown 10_01_2023"
+author: "oussama, julie, vectoria"
+date: '`r Sys.Date()`'
+output: 
+    html_document:
+    code_folding: hide           
+    highlight: tango             
+    toc: yes                    
+    toc_depth: 6 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# install.packages("readxl", dependencies = TRUE)
+# install.packages("ggplot2", dependencies = TRUE)
+# install.packages(c("ggplot2", "ggpubr", "tidyverse", "broom", "AICcmodavg"), , dependencies = TRUE)
+library(ggplot2)
+library(ggpubr)
+library(tidyverse)
+library(broom)
+library(ggplot2)
+```
+
+#### This file is regarding the results for the water stress green house experiment - Group 5
+
+## Chapter 1 - Downloading the data
+> The initial step is the aggregation of all data from the groups (1-5) in a shared Excel file on Google Drive. This document should be downloaded as an excel sheet named "Data", in this project's repository folder. In order to import this data we used the package "readxl".
+
+```{r}
+readxl::read_excel("data_dec/water_stress.xlsx")
+d0 <- readxl::read_excel("data_dec/water_stress.xlsx", sheet = "Data")
+```
+
+> After importing the data, we give it the name of d0. Next step is to visualize it, by creating different plots.
+
+## Chapter 2 - Visualization of data with plots. 
+>In this step we want to create many plots in order to better visualize the data.
+We will use X= Date and Y= Variable (Y1= Plant height ; Y2= Leaf number ; Y3= Leaf lenght ; Y4= Leaf width ; Y5= Leaf area ; Y7= Chlorophyll )
+
+**the code used for this step is : 
+ggplot(d0, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) + 
+  geom_line()+
+  facet_grid(Species ~.)**
+  
+  
+##findings
+  > after seeing all the charts, we selected the ones below because:
+  
+  > *  we want to make the R markdown file visually appealing by avoiding plotting all variables for all species.
+  
+  > *  we consider the graphs below representative of the general trends observed in the other species and variables.
+  
+  > *  we have chosen to analyze the data for week 6, because the effect of the water stress deficit is clearer for this week. 
+  
+  
+> This next code chunk is meant to help visualize only soil humidity for two species (Solanum lycopersicum and lolium perenne) and script on how to plot it
+
+```{r}
+# For Solanum lycopersicum
+
+s1 <- d0[d0$Species=="Solanum lycopersicum",]
+ggplot(s1, aes(x= Week, y= Soil_humidity, group= PlantId, color= Treatment)) + 
+  geom_line()
+  
+# For 	Lolium perenne
+s2 <- d0[d0$Species=="Lolium perenne",]
+ggplot(s2, aes(x= Week, y= Soil_humidity, group= PlantId, color= Treatment)) + 
+  geom_line() 
+```
+
+
+> This next code chunk is meant to help visualize only the variable "Plant_height" for the species (Raphanus sativus) and script on how to plot it 
+
+```{r}
+# For 	Raphanus sativus
+
+s3 <- d0[d0$Species=="Raphanus sativus",]
+ggplot(s3, aes(x= Week, y= Plant_height, group= PlantId, color= Treatment)) + 
+  geom_line()
+```
+
+# Chapter 3 - ANOVA
+
+> For the third part of this project, we will advance with statistical calculations. For this we used multiple packages including ggplot2", "ggpubr", "tidyverse", "broom" and "AICcmodavg". Now that we have seen all the variables and the difference for species over time, as we said before we can have chosen  the week 6 to do the analyses.
+
+## Linear model 
+### Plant Height
+
+```{r, fig.width=10}
+
+#performing the ANOVA analysis
+
+d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Plant_height") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Plant_height ~ Treatment + Species, data=d1)
+anova(lm1)
+
+
+#second try
+
+rl <- length(levels(as.factor(d0$Species)))*3
+
+df0 <- data.frame(Treatment = character(), Species = character(), Letters = character())
+df0[1:rl,] <- NA
+k = 1
+i <- levels(as.factor(d0$Species))[1]
+for (i in levels(as.factor(d0$Species))) {
+  
+
+d2 <- d1[d1$Species == i,]
+
+
+model <- aov(Plant_height~Treatment, data =d2 )
+
+
+hsd <-HSD.test(model, "Treatment")
+
+df0$Treatment[k:(k+2)] <- row.names(hsd$groups)
+df0$Species [k:(k+2)] <- i
+df0$Letters [k:(k+2)] <- hsd$groups$groups
+
+k <- k+3 
+}
+
+
+# plotting the ANOVA results
+
+ggplot(d1, aes(x= Treatment, y= Plant_height, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0)) +
+  geom_text(data =df0 , aes(y = 85, label = Letters))
+
+```
+
+
+  
+  
+  
+  
+<!-- library(emmeans) -->
+<!-- library(multcomp) -->
+
+<!-- ( cld_dat = as.data.frame( cld(emmeans(model, ~Treatment+Species), -->
+<!--                    Letters = letters ) ) ) -->
+
+

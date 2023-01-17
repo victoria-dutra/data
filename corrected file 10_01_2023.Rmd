@@ -1,0 +1,349 @@
+---
+title: "Corrected R file 10/01/2022"
+author: "Oussama, Julie, Victória"
+date: "2023-01-10"
+output:
+    html_document:
+    code_folding: hide           
+    highlight: tango             
+    toc: yes                    
+    toc_depth: 6 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# install.packages("readxl", dependencies = TRUE)
+# install.packages("ggplot2", dependencies = TRUE)
+# install.packages(c("ggplot2", "ggpubr", "tidyverse", "broom", "AICcmodavg"), , dependencies = TRUE)
+library(ggplot2)
+library(ggpubr)
+library(tidyverse)
+library(broom)
+library(ggplot2)
+```
+#### This file is regarding the results for the water stress green house experiment - Group 5
+
+## Chapter 1 - Downloading the data
+##### The initial step is the aggregation of all data from the groups (1-5) in a shared Excel file on Google Drive. This document should be downloaded as an excel sheet named "Data", in this project's repository folder. In order to import this data we used the package "readxl".
+```{r}
+readxl::read_excel("data_dec/water_stress.xlsx")
+d0 <- readxl::read_excel("data_dec/water_stress.xlsx", sheet = "Data")
+```
+##### After importing the data, we give it the name of d0. Next step is to visualize it, by creating different plots.
+
+## Chapter 2 - Visualization of data with plots. 
+##### In this step we want to create many plots in order to better visualize the data.
+##### We will use X= Date and Y= Variable (Y1= Plant height ; Y2= Leaf number ; Y3= Leaf lenght ; Y4= Leaf width ; Y5= Leaf area ; Y7= Chlorophyll ) 
+
+##### First plot with all species
+```{r, fig.height=15}
+ggplot(d0, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) + 
+  geom_line()+
+  facet_grid(Species ~.)
+```
+
+##### This next code chunk is meant to help visualize only one species (Solanum lycopersicum) and script on how to plot it
+```{r}
+# For Solanum lycopersicum
+s1 <- d0[d0$Species=="Solanum lycopersicum",]
+ggplot(s1, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) + 
+  geom_line()
+```
+
+##### Now we create a for loop to visualize all the species and all the variables 
+```{r, eval=TRUE}
+v1 <- c("Plant_height", "Leaf_width", "Leaf_length", "Leaf_area", "Leaf_number", "Root_length", "Chlorophyll_content", "Soil_humidity", "Electrical_conductivity")
+i <- "Beta vulgaris"
+variable <- "Plant_height"
+
+for(i in levels(as.factor(d0$Species))) {
+  for(variable in v1) {
+    s1 <- d0[d0$Species==i, c(variable, "Week", "PlantId", "Treatment")]
+    s1 <- na.exclude(s1)
+    p <- ggplot(s1, aes(x= Week, y= .data[[variable]], group= PlantId, color= Treatment)) + 
+      geom_line() + 
+      labs(title = i)
+    print(p)
+  }
+}
+
+```
+
+## Chapter 3 - ANOVA
+
+> For the third part of this project, we will advance with statistical calculations. For this we used multiple packages including ggplot2", "ggpubr", "tidyverse", "broom" and "AICcmodavg". Now that we have seen all the variables and the difference for species over time, we can choose which week is better for demonstrating each one of them based on which week shows the most change.  
+
+111
+
+##### Linear model 
+#### Plant Height
+Most visual difference is in week 6 (w6)
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Plant_height") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Plant_height ~ Treatment + Species, data=d1)
+anova(lm1)
+summary(lm1)
+ggplot(d1, aes(x= Treatment, y= Plant_height, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+```
+
+##### Leaf number 
+###### Week 1
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W1" , c("Treatment", "Species", "Leaf_number") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Leaf_number ~ Treatment + Species, data=d1)
+anova(lm1)
+ggplot(d1, aes(x= Treatment, y= Leaf_number, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+```
+
+###### Week 6
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Leaf_number") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Leaf_number ~ Treatment + Species, data=d1)
+anova(lm1)
+ggplot(d1, aes(x= Treatment, y= Leaf_number, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+```
+
+##### Leaf length
+###### Week 1
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W1" , c("Treatment", "Species", "Leaf_length") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Leaf_length ~ Treatment + Species, data=d1)
+anova(lm1)
+ggplot(d1, aes(x= Treatment, y= Leaf_length, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+```
+
+###### Week 6
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Leaf_length") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Leaf_length ~ Treatment + Species, data=d1)
+anova(lm1)
+ggplot(d1, aes(x= Treatment, y= Leaf_length, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+```
+
+##### Leaf width
+###### Week 1
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W1" , c("Treatment", "Species", "Leaf_width") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Leaf_width ~ Treatment + Species, data=d1)
+anova(lm1)
+ggplot(d1, aes(x= Treatment, y=Leaf_width, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+```
+
+###### Week 6
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Leaf_width") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Leaf_width ~ Treatment + Species, data=d1)
+anova(lm1)
+ggplot(d1, aes(x= Treatment, y=Leaf_width, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+```
+
+##### Leaf area
+###### Week 1
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W1" , c("Treatment", "Species", "Leaf_area") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Leaf_area ~ Treatment + Species, data=d1)
+anova(lm1)
+ggplot(d1, aes(x= Treatment, y=Leaf_area, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+```
+
+###### Week 6
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Leaf_area") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Leaf_area ~ Treatment + Species, data=d1)
+anova(lm1)
+ggplot(d1, aes(x= Treatment, y=Leaf_area, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+```
+
+##### Chlorophyll content
+###### Week 3
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W3" , c("Treatment", "Species", "Chlorophyll_content") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Chlorophyll_content ~ Treatment + Species, data=d1)
+anova(lm1)
+ggplot(d1, aes(x= Treatment, y=Chlorophyll_content, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+```
+###### Week 4
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W4" , c("Treatment", "Species", "Chlorophyll_content") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Chlorophyll_content ~ Treatment + Species, data=d1)
+anova(lm1)
+ggplot(d1, aes(x= Treatment, y=Chlorophyll_content, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+```
+###### Week 5
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W5" , c("Treatment", "Species", "Chlorophyll_content") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Chlorophyll_content ~ Treatment + Species, data=d1)
+anova(lm1)
+ggplot(d1, aes(x= Treatment, y=Chlorophyll_content, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+```
+###### Week 6
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Chlorophyll_content") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Chlorophyll_content ~ Treatment + Species, data=d1)
+anova(lm1)
+ggplot(d1, aes(x= Treatment, y=Chlorophyll_content, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+```
+
+##### Aerial fresh weight 
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Aerial_fresh_weight") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Aerial_fresh_weight ~ Treatment + Species, data=d1)
+anova(lm1)
+summary(lm1)
+ggplot(d1, aes(x= Treatment, y=Aerial_fresh_weight, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+
+```
+
+##### Aerial dry weight 
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Aerial_dry_weight") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Aerial_dry_weight ~ Treatment + Species, data=d1)
+anova(lm1)
+summary(lm1)
+ggplot(d1, aes(x= Treatment, y=Aerial_dry_weight, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+
+```
+
+##### Root length
+```{r, fig.width=10}
+d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Root_length") ]
+d1 <- na.exclude(d1) #remove the ones with empty cells 
+lm1 <- lm(Root_length ~ Treatment + Species, data=d1)
+anova(lm1)
+summary(lm1)
+ggplot(d1, aes(x= Treatment, y=Root_length, fill= Species)) + 
+  geom_boxplot() +
+  facet_grid(. ~ Species) +
+  theme(strip.text.x = element_text(size=0))
+
+```
+
+
+## part3: PCA analysis
+in this part we are going to do a PCA analysis for the data
+
+```{r}
+
+#importing data
+
+#we already imported the data in the previous parts, that's why the functions of importing the data are commented
+
+#readxl::read_excel("data_dec/water_stress.xlsx")
+#d0 <- readxl::read_excel("data_dec/water_stress.xlsx", sheet = "Data")
+```
+
+Next we need to make a subset for the data with only numerical variables and exclude the other variables, scale the data and after that we will exclude all the missing data
+```{r}
+PCA_data <- d0[c(8:9, 11:21)]
+PCA_data_scaled <- as.data.frame(scale(PCA_data))
+view(PCA_data_scaled)
+
+# exclude missing values NA
+
+PCA_data01 <- na.exclude(PCA_data_scaled)
+
+```
+
+ now we are going to do a PCA of the data
+ 
+```{r}
+PCA <- prcomp(PCA_data01, scale = FALSE)
+print(PCA)
+```
+ 
+now we will plot the PCA results
+```{r}
+# Plotting the PCA results
+# install.packages("factoextra") 
+#if(!require(devtools)) install.packages("devtools")
+#devtools::install_github("kassambara/factoextra")  
+
+library(factoextra)
+library(ggplot2)
+
+fviz_eig(PCA)
+
+# graph for individuals
+
+
+
+fviz_pca_ind(PCA,
+             col.ind = "cos2", 
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE     # Avoid text overlapping
+)
+
+
+
+# graph of variable
+
+
+fviz_pca_var(PCA,
+             col.var = "contrib", # Color by contributions to the PC
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE     # Avoid text overlapping
+)
+
+
+```
+

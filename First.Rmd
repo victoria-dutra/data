@@ -29,7 +29,11 @@ Y4= Leaf width
 Y5= Leaf area 
 Y7= Chlorophyll 
 
+<<<<<<< HEAD
 
+=======
+S1 : Solanum lycopersicum
+>>>>>>> 06bbc6c901366b69dcdb2a5664eb2474b4a5aa7c
 ```{r, fig.height=15}
 # install.packages("ggplot2", dependencies = TRUE)
 library(ggplot2)
@@ -40,12 +44,16 @@ ggplot(d0, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) +
   facet_grid(Species ~.)
 
 ```
+<<<<<<< HEAD
 
+=======
+>>>>>>> 06bbc6c901366b69dcdb2a5664eb2474b4a5aa7c
 ```{r}
 # For Solanum lycopersicum
 s1 <- d0[d0$Species=="Solanum lycopersicum",]
 ggplot(s1, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) + 
   geom_line()
+<<<<<<< HEAD
 ```
 
 ```{r, eval=TRUE}
@@ -66,6 +74,64 @@ for(i in levels(as.factor(d0$Species))) {
 
 ```
 
+=======
+
+```
+
+
+S2 : Amaranthus retroflexus
+```{r}
+
+
+```
+
+
+S3 : Spinacia oleracea
+```{r}
+
+```
+
+
+S4 : Amaranthus retroflexus
+```{r}
+
+```
+
+
+S5 : Hordeum vulgare
+```{r}
+
+```
+
+
+S6 : Lolium perenne
+```{r}
+
+```
+
+
+S7 : Beta vulgaris
+```{r}
+
+```
+
+
+S8 : Sonchus oleraceus
+```{r}
+
+```
+
+
+S9 : Portulacea oleracea
+```{r}
+
+```
+
+
+S10 : Raphanus sativus
+```{r}
+
+>>>>>>> 06bbc6c901366b69dcdb2a5664eb2474b4a5aa7c
 ```
 
 # Chapter 2 - ANOVA
