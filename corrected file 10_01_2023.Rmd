@@ -293,8 +293,174 @@ in this part we are going to do a PCA analysis for the data
 ```
 
 Next we need to make a subset for the data with only numerical variables and exclude the other variables, scale the data and after that we will exclude all the missing data
+
+
+
 ```{r}
-PCA_data <- d0[c(8:9, 11:21)]
+
+# final try
+
+d5 <- d0[d0$Week == "W6", c(4,7, 8, 11:21)]
+d6 <- na.exclude(d5)
+
+data2 <- d0[d0$Week == "W6", c(8, 11:21)]
+data3 <- na.exclude(data2)
+
+PCA_data_scaled1 <- as.data.frame(scale(data3))
+
+PCA <- prcomp(PCA_data_scaled1, scale = FALSE)
+library(factoextra)
+library(ggplot2)
+
+fviz_eig(PCA)
+
+# graph for individuals
+
+
+
+fviz_pca_ind(PCA,
+             col.ind = d6$Species, 
+             # gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE     # Avoid text overlapping
+)
+
+fviz_pca_biplot(PCA,
+             col.ind = d6$Species,
+             label = "var",
+             # geom.ind = d6$Treatment,
+             addEllipses = TRUE,
+             # gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE     # Avoid text overlapping 
+             
+) + 
+   scale_shape_manual(values=rep(19,7))
+
+
+
+
+# graph of variable
+
+
+fviz_pca_var(PCA,
+             col.var = "contrib", # Color by contributions to the PC
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE     # Avoid text overlapping
+)
+
+
+PCA$x[,1]
+
+```
+
+
+```{r}
+# tomato
+
+d5 <- d0[d0$Week == "W6" & d0$Species == "Solanum lycopersicum", c(4,7, 8, 11:21)]
+d6 <- na.exclude(d5)
+
+data2 <- d0[d0$Week == "W6" & d0$Species == "Solanum lycopersicum", c(8, 11:21)]
+data3 <- na.exclude(data2)
+
+PCA_data_scaled1 <- as.data.frame(scale(data3))
+
+PCA <- prcomp(PCA_data_scaled1, scale = FALSE)
+library(factoextra)
+library(ggplot2)
+
+fviz_eig(PCA)
+
+# graph for individuals
+
+
+
+fviz_pca_ind(PCA,
+             col.ind = d6$Species, 
+             # gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE     # Avoid text overlapping
+)
+
+fviz_pca_biplot(PCA,
+             col.ind = d6$Treatment,
+             label = "var",
+             # geom.ind = d6$Treatment,
+             addEllipses = TRUE,
+             # gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE     # Avoid text overlapping 
+             
+) + 
+   scale_shape_manual(values=rep(19,7))
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+
+# second try
+
+data2 <- d0[d0$Week == "W6", c(8, 11:21)]
+data3 <- na.exclude(data2)
+
+PCA_data_scaled1 <- as.data.frame(scale(data3))
+
+PCA <- prcomp(PCA_data_scaled1, scale = FALSE)
+library(factoextra)
+library(ggplot2)
+
+fviz_eig(PCA)
+
+# graph for individuals
+
+
+
+fviz_pca_ind(PCA,
+             col.ind = "cos2", 
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE     # Avoid text overlapping
+)
+
+
+
+# graph of variable
+
+
+fviz_pca_var(PCA,
+             col.var = "contrib", # Color by contributions to the PC
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE     # Avoid text overlapping
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+PCA_data <- d0[c(8, 11:21)]
 PCA_data_scaled <- as.data.frame(scale(PCA_data))
 view(PCA_data_scaled)
 
