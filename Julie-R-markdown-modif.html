@@ -416,16 +416,16 @@ the water stress deficit is clearer for this week.</li>
 </blockquote>
 <blockquote>
 <p>In order to get a better understanding of the variability between
-weeks, the group chose to explore 2 main graphs for soil parameters, one
-cultivated species (Solanum lycopersicum) and one wild species (Lolium
-perenne?). The following chunk is performing the visual
-representation.</p>
+weeks, the group chose to explore two main graphs for soil parameters,
+one with a cultivated species (Solanum lycopersicum) and one with a wild
+species (Lolium perenne). The following code chunk is performing the
+visual representation.</p>
 </blockquote>
 <pre class="r"><code># For Solanum lycopersicum
 
 library(viridis)</code></pre>
 <pre><code>## Loading required package: viridisLite</code></pre>
-<pre class="r"><code>s1 &lt;- d0[d0$Species==&quot;Solanum lycopersicum&quot;,]
+<pre class="r"><code>s1 &lt;- d0[d0$Species == &quot;Solanum lycopersicum&quot;,]
 ggplot(s1, aes(x= Week, y= Soil_humidity, group= PlantId, color= Treatment)) + 
   geom_line() +
   labs(title = &#39;Figure 1: Evolution of the soil humidity of Solanum lycopersicum on 6 weeks&#39;) +
