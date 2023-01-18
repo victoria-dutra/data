@@ -809,7 +809,9 @@ fviz_contrib(PCA, choice = "var", axes = 3, top = 11)+
 fviz_contrib(PCA, choice = "var", axes = 1:2, top = 11)+
   theme_cleveland()
 
-
 ```
+
+
+
 
 
