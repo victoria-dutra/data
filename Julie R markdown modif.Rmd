@@ -57,7 +57,7 @@ ggplot(d0, aes(x= Date, y =Plant_height, group= PlantId, color= Treatment)) +
   
 > In order to get a better understanding of the variability between weeks, the group chose to explore two main graphs for soil parameters, one with a cultivated species (Solanum lycopersicum) and one with a wild species (Lolium perenne). The following code chunk is performing the visual representation.
 
-```{r}
+```{r, fig.width=8}
 # For Solanum lycopersicum
 
 library(viridis)
@@ -65,17 +65,17 @@ library(viridis)
 s1 <- d0[d0$Species == "Solanum lycopersicum",]
 ggplot(s1, aes(x= Week, y= Soil_humidity, group= PlantId, color= Treatment)) + 
   geom_line() +
-  labs(title = 'Figure 1: Evolution of the soil humidity of Solanum lycopersicum on 6 weeks') +
+  labs(title = 'Figure 1: Evolution of the soil humidity of Solanum lycopersicum during the six weeks') +
   theme_pubclean() +
   scale_color_viridis(discrete = TRUE)
 ```
 
-```{r}
+```{r, fig.width=8}
 # For 	Lolium perenne
 s2 <- d0[d0$Species=="Lolium perenne",]
 ggplot(s2, aes(x= Week, y= Soil_humidity, group= PlantId, color= Treatment)) + 
   geom_line() +
-  labs(title = 'Figure 2: Evolution of the soil humidity of Lolium perenne on 6 weeks') +
+  labs(title = 'Figure 2: Evolution of the soil humidity of Lolium perenne during the six weeks') +
   theme_pubclean() +
   scale_color_viridis(discrete = TRUE)
 ```
@@ -84,13 +84,13 @@ ggplot(s2, aes(x= Week, y= Soil_humidity, group= PlantId, color= Treatment)) +
 
 > The next code chunk is meant to help visualize the pattern we have by taking only the variable "Plant_height" and the species Raphanus sativus. This species was the most representative species to assess the plant height by treatment, and the plant height appeared to be the best variable to extrapolate the stress level of the plant. 
 
-```{r}
+```{r, fig.width=8}
 # For 	Raphanus sativus
 
 s3 <- d0[d0$Species=="Raphanus sativus",]
 ggplot(s3, aes(x= Week, y= Plant_height, group= PlantId, color= Treatment)) + 
   geom_line() +
-  labs(title = 'Figure 3: Evolution of the plant height of Raphanus sativus on 6 weeks') +
+  labs(title = 'Figure 3: Evolution of the plant height of Raphanus sativus during the six weeks') +
   theme_pubclean() +
   scale_color_viridis(discrete = TRUE)
 ```
