@@ -11,13 +11,14 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-if (!dir.exists("results")) dir.create("results")  # create folder if necessary
-knitr::opts_chunk$set(              # nice results format
-  fig.path = "results22/",            # Folder for figures
-  dev = "png",                      # png format for figures
-  dev.args = list(type = "cairo"),  # png args. Improves png
-  dpi = 100                         # 100 for working, 300 for publication
-)
+knitr::opts_chunk$set(echo = TRUE)
+# if (!dir.exists("results")) dir.create("results")  # create folder if necessary
+# knitr::opts_chunk$set(              # nice results format
+#   fig.path = "results22/",            # Folder for figures
+#   dev = "png",                      # png format for figures
+#   dev.args = list(type = "cairo"),  # png args. Improves png
+#   dpi = 100                         # 100 for working, 300 for publication
+# )
 # install.packages("readxl", dependencies = TRUE)
 # install.packages("ggplot2", dependencies = TRUE)
 # install.packages(c("ggplot2", "ggpubr", "tidyverse", "broom", "AICcmodavg"), , dependencies = TRUE)
@@ -136,7 +137,7 @@ k <- k+3
 ggplot(d1, aes(x= Treatment, y= Soil_humidity, fill= Species)) + 
   geom_boxplot(show.legend = FALSE) +
   facet_grid(. ~ Species) +
-  theme(strip.text.x = element_text(size=0)) +
+  theme(strip.text.x = element_text(size=0.1)) +
   geom_text(data =df0 , aes(y =max(d1$Soil_humidity) , label = Letters))+
    theme_pubclean()+
   labs(title = 'Figure 01. The effect of water deficit treatments on the soil humidity (%) of the different species.')
@@ -302,7 +303,7 @@ k <- k+3
 # plotting the ANOVA results
 
 ggplot(d1, aes(x= Treatment, y= Leaf_length, fill= Species)) + 
-  geom_boxplot(how.legend = FALSE) +
+  geom_boxplot(show.legend = FALSE) +
   facet_grid(. ~ Species) +
   theme(strip.text.x = element_text(size=0)) +
   geom_text(data =df0 , aes(y = max(d1$Leaf_length), label = Letters))+
