@@ -430,7 +430,7 @@ ggplot(d1, aes(x= Treatment, y= Leaf_area, fill= Species)) +
   labs(title = 'Boxplot 06. Effect of water deficit  on the leaf area (%) of the different species.')
 ```
 
-> The Boxplot 06 is supposly an extrapolation of the two previous, and confirms that R. sativus is the most impacted species by the water deficit. The rest of the species are also not more clearly impacted than the two previous figures, and only two species seem to not be affected by the experiment here. Those species are Hordeum vulgare and Lolium perenne.
+> The Boxplot 06 is supposedly an extrapolation of the two previous and confirms that R. sativus is the most impacted species by the water deficit. The rest of the species are also not more clearly impacted than the two previous figures, and only two species seem to not be affected by the experiment here. Those species are Hordeum vulgare and Lolium perenne.
 
 ### Chlorophyll_content
 
@@ -482,12 +482,7 @@ ggplot(d1, aes(x= Treatment, y= Chlorophyll_content, fill= Species)) +
    labs(title = 'Boxplot 07. Effect of water deficit  on the chlorophyll content (SPAD Unit) of the different species.')
 ```
 
-> 
-
-
-
-
-
+> There are only 7 compared species here because we could not measure the Chlorophyll content of the species Hordeun vulgare and Lolium perenne due to their too thin leaves. Now what we see in the graph above is interesting but it is probably a not long enough experiement to have significant results. The chlorophyll content significantly increases in R. sativus between the control and the stress. However this content looks to reduce in A. retroflexus and S. lycopersicum. 
 
 ### Aerial_fresh_weight
 
@@ -535,15 +530,15 @@ ggplot(d1, aes(x= Treatment, y= Aerial_fresh_weight, fill= Species)) +
   theme(strip.text.x = element_text(size=0)) +
   geom_text(data =df0 , aes(y = max(d1$Aerial_fresh_weight), label = Letters))+
   theme_pubclean()+
-  labs(title = 'Boxplot 07. The effect of water deficit  on the aerial fresh weight (g) of the different species.')
+  labs(title = 'Boxplot 08. The effect of water deficit  on the aerial fresh weight (g) of the different species.')
 
 ```
 
-> Beta vulgaris, Raphanus sativus and Sonchus oleraceus are clearly impacted by the two treatments in deficit of water. Solanum lycopersicum is and Hordeum vulgare are also impacted by mostly by the stress treatment (s). All those species are cultivated species except Sonchus oleraceus, and all would probably decrease in yield if they lack of water, according to this experiment.
+> Beta vulgaris, Raphanus sativus and Sonchus oleraceus are clearly impacted by the two treatments in deficit of water. Solanum lycopersicum is and Hordeum vulgare are also impacted by mostly by the stress treatment (s). All those species are cultivated species except Sonchus oleraceus, and all will probably decrease in yield if they lack of water, according to this experiment.
 
 ### Aerial_dry_weight
 
-> The Boxplot 08 shows the Aerial dry weight of thw different species, at the end of the experiement.
+> The Boxplot 09 shows the Aerial dry weight of the different species, at the end of the experiment.
 
 ```{r, fig.width=10, echo=FALSE, results = FALSE, message=FALSE, warning=FALSE}
 #performing the ANOVA analysis
@@ -587,13 +582,13 @@ ggplot(d1, aes(x= Treatment, y= Aerial_dry_weight, fill= Species)) +
   theme(strip.text.x = element_text(size=0)) +
   geom_text(data =df0 , aes(y = max(d1$Aerial_dry_weight), label = Letters))+
   theme_pubclean()+
-  labs(title = 'Boxplot 08. Effect of water deficit  on the aerial dry weight (cm) of the different species.')
+  labs(title = 'Boxplot 09. Effect of water deficit  on the aerial dry weight (cm) of the different species.')
 
 ```
 
-> It is slightly less obvious in the Boxplot 08 that water scarcity affects the plants, but this analyse is not adapted to every species since they have very different morphologies. Nonetheless, R. sativus data correct with the previous analysis and its aerial dry weight is decreasing with the two treatements i and s. Other than that, Beta vulgaris, Hordeum vulgare, Solanum lycopersicum and Sonchus oleraceus are also showing a significant reduction of aerial dry weight by diminish the water availibility. We assume that Portulaca oleracea weight is too small to be interpreted. 
+> It is slightly less obvious in the Boxplot 09 that water scarcity affects the plants, but this analyse is not adapted to every species since they have very different morphologies. Nonetheless, R. sativus data correct with the previous analysis and its aerial dry weight is decreasing with the two treatments i and s. Other than that, Beta vulgaris, Hordeum vulgare, Solanum lycopersicum and Sonchus oleraceus are also showing a significant reduction of aerial dry weight by diminish the water availability. We assume that Portulaca oleracea weight is too small to be interpreted. 
 
-> The Boxplots 09, 10 and 11 will present the root measurements taken after the experiment. 
+> The Boxplots 10, 11 and 12 will present the root measurements taken after the experiment. 
 
 ### Root_length
 
@@ -640,13 +635,12 @@ ggplot(d1, aes(x= Treatment, y= Root_length, fill= Species)) +
   theme(strip.text.x = element_text(size=0)) +
   geom_text(data =df0 , aes(y = max(d1$Root_length), label = Letters))+
   theme_pubclean()+
-  labs(title = 'Boxplot 09. Effect of water deficit  on the root lenght (cm) of the different species.')
+  labs(title = 'Boxplot 10. Effect of water deficit  on the root lenght (cm) of the different species.')
 
   
 ```
 
-> Boxplot 09 is showing that the water deficit during this short experiment still has an impact on the root lenght of some species (Hordeum vulgare and Raphanus sativus). Interestingly while Hordeum vulgare seems to reduce its roots lenght, Raphanus sativus will increase its root lenght under water scarcity. It is not significant enough for the other species that water stress has an effect on the root lenght, in this experiement.
-
+> Boxplot 09 is showing that the water deficit during this short experiment still has an impact on the root length of some species (Hordeum vulgare and Raphanus sativus). Interestingly while Hordeum vulgare seems to reduce its roots length, Raphanus sativus will increase its root length under water scarcity. It is not significant enough for the other species that water stress influences the root length, in this experiment.
 
 ### Roots_fresh_weight
 
@@ -692,17 +686,14 @@ ggplot(d1, aes(x= Treatment, y= Roots_fresh_weight, fill= Species)) +
   theme(strip.text.x = element_text(size=0)) +
   geom_text(data =df0 , aes(y = max(d1$Roots_fresh_weight), label = Letters))+
   theme_pubclean()+
-  labs(title = 'Boxplot 10. The effect of water deficit  on the root fresh weight (g) of the different species.')
+  labs(title = 'Boxplot 11. The effect of water deficit  on the root fresh weight (g) of the different species.')
 ```
 
-
-
-
-
-
-
+> The Boxplot 11 is showing at the same scale all the studied species of all size of roots. It is only appealing for the cultivated species R. sativus. The latter is clearly showing a drop weight for its fresh roots with the decrease of available water.  There is not a clear pattern among the other species.
 
 ### Roots_dry_weight
+
+> The boxplot 12 is taking the dry weight of the root in each treatment for all the studied species in order to see the possible effect of the water stress and compare those responses.
 
 ```{r, fig.width=10, echo=FALSE, results = FALSE, message=FALSE, warning=FALSE}
 #performing the ANOVA analysis
@@ -746,24 +737,19 @@ ggplot(d1, aes(x= Treatment, y= Roots_dry_weight, fill= Species)) +
   theme(strip.text.x = element_text(size=0)) +
   geom_text(data =df0 , aes(y = max(d1$Roots_dry_weight), label = Letters))+
   theme_pubclean()+
-  labs(title = 'Figure 11. The effect of water deficit  on the root dry weight (g) of the different species.')
+  labs(title = 'Boxplot 12. Effect of water deficit  on the root dry weight (g) of the different species.')
 ```
 
+> By comparing with the previous boxplot, we can see better the possible effect of the treatment on the species. We can see that the weight of dry roots material follows the same patter for R. sativus by decreasing. Also, even though Sonchus oleraceus roots dry weight seems to decrease with the deficit of water, there is no significant difference. Hordeum vulgare confirmed a difference of dry roots weight in this figure. It seems that the water deficit increases the weight of its roots. Indeed, there is a significant difference here between the control and the stress.
 
+> In order to understand better what the influence are of each variables on the development of the plant and determine what variable is the most dominant in this experiment, we are going to conduct a Principal Component Analyse (PCA).
 
+## PCA analysis
 
+> In this part we are going to do a PCA analysis of our data. After that we need to make a subset for the data with only numerical variables and exclude the other variables, scale the data and after that we will exclude all the missing data.
 
+> Then we are going to plot the PCA results.
 
-
-
-
-
-## PCA analysis:
-> in this part we are going to do a PCA analysis for the data.
-Next we need to make a subset for the data with only numerical variables and exclude the other variables, scale the data and after that we will exclude all the missing data.
-
- 
->now we will plot the PCA results
 ```{r}
 
 d5 <- d0[d0$Week == "W6", c(4,7, 8, 11:21)]
