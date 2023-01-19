@@ -1,5 +1,5 @@
 ---
-title: "Final R markdown 17_01_2023"
+title: "Final R markdown 19_01_2023"
 author: "Oussama, Julie, Victoria"
 date: '`r Sys.Date()`'
 output: 
@@ -34,7 +34,7 @@ library(agricolae)
 library(viridis) # for aesthetic
 ```
 
-#### This file is regarding the results for the water stress green house experiment - Group 5
+#### This file is regarding the results for the water stress green house experiment - Group 5.
 
 ## Chapter 1 - Downloading the data
 > The initial step is the aggregation of all data from the groups (1-5) in a shared Excel file on Google Drive. The dataframe is directly downloaded from GoogleDrive with the package 'gsheet' and named d0. Prior installation of Rtools in the right version of R is necessary to use this package.
@@ -81,9 +81,9 @@ ggplot(d0, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) +
 ```{r}
 # For Solanum lycopersicum
 
-s1 <- d0[d0$Species=="Solanum lycopersicum",] #create a subset of data
+s1 <- d0[d0$Species == "Solanum lycopersicum",] #create a subset of data
 
-ggplot(s1, aes(x= Week, y= Soil_humidity, group= PlantId, color= Treatment)) +  #plot the data
+ggplot(s1, aes(x = Week, y = Soil_humidity, group = PlantId, color = Treatment)) +  #plot the data
   geom_line() +
   labs(title = expression(paste('Figure 1. Evolution of Soil humidity (%) of', italic(' S. lycopersicum'),' on 6 weeks'))) +
   theme_pubclean() +
@@ -91,9 +91,9 @@ ggplot(s1, aes(x= Week, y= Soil_humidity, group= PlantId, color= Treatment)) +  
   
 # For 	Lolium perenne
 
-s2 <- d0[d0$Species=="Lolium perenne",] #create a subset of data
+s2 <- d0[d0$Species == "Lolium perenne",] #create a subset of data
 
-ggplot(s2, aes(x= Week, y= Soil_humidity, group= PlantId, color= Treatment)) + #plot the data
+ggplot(s2, aes(x = Week, y = Soil_humidity, group = PlantId, color = Treatment)) + #plot the data
   geom_line() +
   labs(title = expression(paste('Figure 2. Evolution of Soil humidity (%) of', italic(' Lolium perenne'), ' on 6 weeks'))) +
   theme_pubclean() +
@@ -110,8 +110,8 @@ ggplot(s2, aes(x= Week, y= Soil_humidity, group= PlantId, color= Treatment)) + #
 ```{r}
 # For 	Raphanus sativus
 
-s3 <- d0[d0$Species=="Raphanus sativus",]
-ggplot(s3, aes(x= Week, y= Plant_height, group= PlantId, color= Treatment)) + 
+s3 <- d0[d0$Species == "Raphanus sativus",]
+ggplot(s3, aes(x = Week, y = Plant_height, group = PlantId, color = Treatment)) + 
   geom_line() +
   labs(title = expression(paste('Figure 3. Evolution of Plant height (cm) of ', italic('Raphanus sativus'), ' on 6 weeks'))) +
   theme_pubclean() +
@@ -144,9 +144,9 @@ ggplot(s3, aes(x= Week, y= Plant_height, group= PlantId, color= Treatment)) +
 
 #performing the ANOVA analysis
 
-d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Soil_humidity") ] # create a subset of the data
+d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Soil_humidity")] # create a subset of the data
 d1 <- na.exclude(d1)                                                    # exclude the missing observations
-lm1 <- lm(Soil_humidity ~ Treatment + Species, data=d1)                 # create the linear model
+lm1 <- lm(Soil_humidity ~ Treatment + Species, data = d1)                 # create the linear model
 anova(lm1)                                                              # perfom the ANOVA analysis
 
 
@@ -154,16 +154,16 @@ anova(lm1)                                                              # perfom
 
 rl <- length(levels(as.factor(d0$Species)))*3                                          # create an empty table with the number of
 df0 <- data.frame(Treatment = character(), Species = character(), Letters = character()) #rows and column that match our data 
-df0[1:rl,] <- NA                                                                          #then fill it with the Tukey HSD results.
+df0[1:rl, ] <- NA                                                                          #then fill it with the Tukey HSD results.
 
 k = 1
 i <- levels(as.factor(d0$Species))[1]
 for (i in levels(as.factor(d0$Species))) {
   
 
-d2 <- d1[d1$Species == i,]
+d2 <- d1[d1$Species == i, ]
 
-model <- aov(Soil_humidity~Treatment, data =d2 )
+model <- aov(Soil_humidity ~ Treatment, data = d2)
 
 hsd <- HSD.test(model, "Treatment")
 
@@ -172,17 +172,18 @@ df0$Species [k:(k+2)] <- i
 df0$Letters [k:(k+2)] <- hsd$groups$groups
 
 k <- k+3  
+
 }
 
 
 # plotting the ANOVA results
 
-ggplot(d1, aes(x= Treatment, y= Soil_humidity, fill= Species)) + 
+ggplot(d1, aes(x = Treatment, y = Soil_humidity, fill = Species)) + 
   geom_boxplot(show.legend = FALSE) +
   facet_grid(. ~ Species) +
-  theme(strip.text.x = element_text(size=0.1)) +
-  geom_text(data =df0 , aes(y =max(d1$Soil_humidity) , label = Letters))+
-   theme_pubclean()+
+  theme(strip.text.x = element_text(size = 0.1)) +
+  geom_text(data = df0 , aes(y = max(d1$Soil_humidity), label = Letters)) +
+   theme_pubclean() +
   labs(title = 'Boxplot 01. Effect of water deficit treatments on the soil humidity (%) of the different species.')
 ```
 
@@ -196,9 +197,9 @@ ggplot(d1, aes(x= Treatment, y= Soil_humidity, fill= Species)) +
 
 #performing the ANOVA analysis
 
-d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Plant_height") ]
+d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Plant_height")]
 d1 <- na.exclude(d1) #remove the ones with empty cells 
-lm1 <- lm(Plant_height ~ Treatment + Species, data=d1)
+lm1 <- lm(Plant_height ~ Treatment + Species, data = d1)
 anova(lm1)
 
 
@@ -209,15 +210,15 @@ anova(lm1)
 rl <- length(levels(as.factor(d0$Species)))*3  #number of rows
 
 df0 <- data.frame(Treatment = character(), Species = character(), Letters = character())
-df0[1:rl,] <- NA
+df0[1:rl, ] <- NA
 k = 1
 i <- levels(as.factor(d0$Species))[1]
 for (i in levels(as.factor(d0$Species))) {
   
 
-d2 <- d1[d1$Species == i,]
+d2 <- d1[d1$Species == i, ]
 
-model <- aov(Plant_height~Treatment, data =d2 )
+model <- aov(Plant_height~Treatment, data =d2)
 
 hsd <- HSD.test(model, "Treatment")
 
@@ -225,18 +226,19 @@ df0$Treatment[k:(k+2)] <- row.names(hsd$groups)
 df0$Species [k:(k+2)] <- i
 df0$Letters [k:(k+2)] <- hsd$groups$groups
 
-k <- k+3  
+k <- k+3 
+
 }
 
 
 # plotting the ANOVA results
 
-ggplot(d1, aes(x= Treatment, y= Plant_height, fill= Species)) + 
+ggplot(d1, aes(x = Treatment, y = Plant_height, fill = Species)) + 
   geom_boxplot(show.legend = FALSE) +
   facet_grid(. ~ Species) +
   theme(strip.text.x = element_text(size=0)) +
-  geom_text(data =df0 , aes(y =max(d1$Plant_height) , label = Letters))+
-   theme_pubclean()+
+  geom_text(data = df0 , aes(y = max(d1$Plant_height) , label = Letters)) +
+   theme_pubclean() +
   labs(title = 'Boxplot 02. Effect of water deficit on the plant height (cm) of the different species.')         
 
 ```
@@ -250,9 +252,9 @@ ggplot(d1, aes(x= Treatment, y= Plant_height, fill= Species)) +
 ```{r, fig.width=10, echo=FALSE, results = FALSE, message=FALSE, warning=FALSE}
 #performing the ANOVA analysis
 
-d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Leaf_number") ]
+d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Leaf_number")]
 d1 <- na.exclude(d1) 
-lm1 <- lm(Leaf_number ~ Treatment + Species, data=d1)
+lm1 <- lm(Leaf_number ~ Treatment + Species, data = d1)
 anova(lm1)
 
 
@@ -261,15 +263,15 @@ anova(lm1)
 rl <- length(levels(as.factor(d0$Species)))*3  #number of rows
 
 df0 <- data.frame(Treatment = character(), Species = character(), Letters = character())
-df0[1:rl,] <- NA
+df0[1:rl, ] <- NA
 k = 1
 i <- levels(as.factor(d0$Species))[1]
 for (i in levels(as.factor(d0$Species))) {
   
 
-d2 <- d1[d1$Species == i,]
+d2 <- d1[d1$Species == i, ]
 
-model <- aov(Leaf_number~Treatment, data =d2 )
+model <- aov(Leaf_number~Treatment, data = d2 )
 
 hsd <- HSD.test(model, "Treatment")
 
@@ -278,17 +280,18 @@ df0$Species [k:(k+2)] <- i
 df0$Letters [k:(k+2)] <- hsd$groups$groups
 
 k <- k+3  
+
 }
 
 
 # plotting the ANOVA results
 
-ggplot(d1, aes(x= Treatment, y= Leaf_number, fill= Species)) + 
+ggplot(d1, aes(x = Treatment, y = Leaf_number, fill = Species)) + 
   geom_boxplot(show.legend = FALSE) +
   facet_grid(. ~ Species) +
-  theme(strip.text.x = element_text(size=0)) +
-  geom_text(data =df0 , aes(y = max(d1$Leaf_number), label = Letters))+
-  theme_pubclean()+
+  theme(strip.text.x = element_text(size = 0)) +
+  geom_text(data = df0 , aes(y = max(d1$Leaf_number), label = Letters)) +
+  theme_pubclean() +
   labs(title = 'Boxplot 03. Effect of water deficit on the leaf number of the different species.')
 
 ```
@@ -302,9 +305,9 @@ ggplot(d1, aes(x= Treatment, y= Leaf_number, fill= Species)) +
 ```{r, fig.width=10, echo=FALSE, results = FALSE, message=FALSE, warning=FALSE}
 #performing the ANOVA analysis
 
-d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Leaf_length") ]
+d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Leaf_length")]
 d1 <- na.exclude(d1) 
-lm1 <- lm(Leaf_length ~ Treatment + Species, data=d1)
+lm1 <- lm(Leaf_length ~ Treatment + Species, data = d1)
 anova(lm1)
 
 
@@ -313,15 +316,15 @@ anova(lm1)
 rl <- length(levels(as.factor(d0$Species)))*3  #number of rows
 
 df0 <- data.frame(Treatment = character(), Species = character(), Letters = character())
-df0[1:rl,] <- NA
+df0[1:rl, ] <- NA
 k = 1
 i <- levels(as.factor(d0$Species))[1]
 for (i in levels(as.factor(d0$Species))) {
   
 
-d2 <- d1[d1$Species == i,]
+d2 <- d1[d1$Species == i, ]
 
-model <- aov(Leaf_length~Treatment, data =d2 )
+model <- aov(Leaf_length~Treatment, data = d2)
 
 hsd <- HSD.test(model, "Treatment")
 
@@ -329,18 +332,19 @@ df0$Treatment[k:(k+2)] <- row.names(hsd$groups)
 df0$Species [k:(k+2)] <- i
 df0$Letters [k:(k+2)] <- hsd$groups$groups
 
-k <- k+3  
+k <- k+3
+
 }
 
 
 # plotting the ANOVA results
 
-ggplot(d1, aes(x= Treatment, y= Leaf_length, fill= Species)) + 
+ggplot(d1, aes(x = Treatment, y = Leaf_length, fill = Species)) + 
   geom_boxplot(show.legend = FALSE) +
   facet_grid(. ~ Species) +
-  theme(strip.text.x = element_text(size=0)) +
-  geom_text(data =df0 , aes(y = max(d1$Leaf_length), label = Letters))+
-  theme_pubclean()+
+  theme(strip.text.x = element_text(size = 0)) +
+  geom_text(data = df0 , aes(y = max(d1$Leaf_length), label = Letters)) +
+  theme_pubclean() +
   labs(title = 'Boxplot 04. Effect of water deficit  on the leaf lenght (cm) of the different species.')
 ```
 
@@ -353,9 +357,9 @@ ggplot(d1, aes(x= Treatment, y= Leaf_length, fill= Species)) +
 ```{r, fig.width=10, echo=FALSE, results = FALSE, message=FALSE, warning=FALSE}
 #performing the ANOVA analysis
 
-d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Leaf_width")]
+d1 <- d0[d0$Week == "W6", c("Treatment", "Species", "Leaf_width")]
 d1 <- na.exclude(d1) 
-lm1 <- lm(Leaf_width ~ Treatment + Species, data=d1)
+lm1 <- lm(Leaf_width ~ Treatment + Species, data = d1)
 anova(lm1)
 
 
@@ -364,15 +368,15 @@ anova(lm1)
 rl <- length(levels(as.factor(d0$Species)))*3  #number of rows
 
 df0 <- data.frame(Treatment = character(), Species = character(), Letters = character())
-df0[1:rl,] <- NA
+df0[1:rl, ] <- NA
 k = 1
 i <- levels(as.factor(d0$Species))[1]
 for (i in levels(as.factor(d0$Species))) {
   
 
-d2 <- d1[d1$Species == i,]
+d2 <- d1[d1$Species == i, ]
 
-model <- aov(Leaf_width~Treatment, data =d2 )
+model <- aov(Leaf_width ~ Treatment, data = d2)
 
 hsd <- HSD.test(model, "Treatment")
 
@@ -381,17 +385,18 @@ df0$Species [k:(k+2)] <- i
 df0$Letters [k:(k+2)] <- hsd$groups$groups
 
 k <- k+3  
+
 }
 
 
 # plotting the ANOVA results
 
-ggplot(d1, aes(x= Treatment, y= Leaf_width, fill= Species)) + 
+ggplot(d1, aes(x = Treatment, y = Leaf_width, fill = Species)) + 
   geom_boxplot(show.legend = FALSE) +
   facet_grid(. ~ Species) +
-  theme(strip.text.x = element_text(size=0)) +
-  geom_text(data =df0 , aes(y = max(d1$Leaf_width), label = Letters))+
-  theme_pubclean()+
+  theme(strip.text.x = element_text(size = 0)) +
+  geom_text(data = df0 , aes(y = max(d1$Leaf_width), label = Letters)) +
+  theme_pubclean() +
   labs(title = 'Boxplot 05. Effect of water deficit  on the leaf width (cm) of the different species.')
 ```
 
@@ -405,9 +410,9 @@ ggplot(d1, aes(x= Treatment, y= Leaf_width, fill= Species)) +
 
 #performing the ANOVA analysis
 
-d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Leaf_area") ]
+d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Leaf_area")]
 d1 <- na.exclude(d1) 
-lm1 <- lm(Leaf_area ~ Treatment + Species, data=d1)
+lm1 <- lm(Leaf_area ~ Treatment + Species, data = d1)
 anova(lm1)
 
 
@@ -416,7 +421,7 @@ anova(lm1)
 rl <- length(levels(as.factor(d0$Species)))*3  #number of rows
 
 df0 <- data.frame(Treatment = character(), Species = character(), Letters = character())
-df0[1:rl,] <- NA
+df0[1:rl, ] <- NA
 k = 1
 i <- levels(as.factor(d0$Species))[1]
 for (i in levels(as.factor(d0$Species))) {
@@ -424,7 +429,7 @@ for (i in levels(as.factor(d0$Species))) {
 
 d2 <- d1[d1$Species == i,]
 
-model <- aov(Leaf_area~Treatment, data =d2 )
+model <- aov(Leaf_area ~ Treatment, data = d2 )
 
 hsd <- HSD.test(model, "Treatment")
 
@@ -433,16 +438,17 @@ df0$Species [k:(k+2)] <- i
 df0$Letters [k:(k+2)] <- hsd$groups$groups
 
 k <- k+3  
+
 }
 
 
 # plotting the ANOVA results
 
-ggplot(d1, aes(x= Treatment, y= Leaf_area, fill= Species)) + 
+ggplot(d1, aes(x = Treatment, y = Leaf_area, fill = Species)) + 
   geom_boxplot(show.legend = FALSE) +
   facet_grid(. ~ Species) +
-  theme(strip.text.x = element_text(size=0)) +
-  geom_text(data =df0 , aes(y = max(d1$Leaf_area), label = Letters))+
+  theme(strip.text.x = element_text(size = 0)) +
+  geom_text(data = df0 , aes(y = max(d1$Leaf_area), label = Letters)) +
   theme_pubclean()+
   labs(title = 'Boxplot 06. Effect of water deficit  on the leaf area (%) of the different species.')
 ```
@@ -457,10 +463,10 @@ ggplot(d1, aes(x= Treatment, y= Leaf_area, fill= Species)) +
 
 # #performing the ANOVA analysis
 
-d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Chlorophyll_content") ]
+d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Chlorophyll_content")]
 
 d1 <- na.exclude(d1)
-lm1 <- lm(Chlorophyll_content ~ Treatment + Species, data=d1)
+lm1 <- lm(Chlorophyll_content ~ Treatment + Species, data = d1)
 anova(lm1)
 
 # Performing  Tukey HSD analysis
@@ -468,7 +474,7 @@ anova(lm1)
 rl <- length(levels(as.factor(d1$Species)))*3  #number of rows
 
 df0 <- data.frame(Treatment = character(), Species = character(), Letters = character())
-df0[1:rl,] <- NA
+df0[1:rl, ] <- NA
 k = 1
 i <- levels(as.factor(d0$Species))[1]
 for (i in levels(as.factor(d1$Species))) {
@@ -476,7 +482,7 @@ for (i in levels(as.factor(d1$Species))) {
 
 d2 <- d1[d1$Species == i,]
 
-model <- aov(Chlorophyll_content~Treatment, data =d2 )
+model <- aov(Chlorophyll_content~Treatment, data = d2 )
 
 hsd <- HSD.test(model, "Treatment")
 
@@ -485,17 +491,18 @@ df0$Species [k:(k+2)] <- i
 df0$Letters [k:(k+2)] <- hsd$groups$groups
 
 k <- k+3
+
 }
 
 
 # plotting the ANOVA results
  
-ggplot(d1, aes(x= Treatment, y= Chlorophyll_content, fill= Species)) +
+ggplot(d1, aes(x = Treatment, y = Chlorophyll_content, fill = Species)) +
   geom_boxplot(show.legend = FALSE) +
   facet_grid(. ~ Species) +
-  theme(strip.text.x = element_text(size=0)) +
-  geom_text(data =df0 , aes(y = max(d1$Chlorophyll_content), label = Letters))+ 
-  theme_pubclean()+
+  theme(strip.text.x = element_text(size = 0)) +
+  geom_text(data = df0 , aes(y = max(d1$Chlorophyll_content), label = Letters)) + 
+  theme_pubclean() +
    labs(title = 'Boxplot 07. Effect of water deficit  on the chlorophyll content (SPAD Unit) of the different species.')
 ```
 
@@ -508,9 +515,9 @@ ggplot(d1, aes(x= Treatment, y= Chlorophyll_content, fill= Species)) +
 ```{r, fig.width=10, echo=FALSE, results = FALSE, message=FALSE, warning=FALSE}
 #performing the ANOVA analysis
 
-d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Aerial_fresh_weight") ]
+d1 <- d0[d0$Week == "W6", c("Treatment", "Species", "Aerial_fresh_weight")]
 d1 <- na.exclude(d1) 
-lm1 <- lm(Aerial_fresh_weight ~ Treatment + Species, data=d1)
+lm1 <- lm(Aerial_fresh_weight ~ Treatment + Species, data = d1)
 anova(lm1)
 
 
@@ -519,15 +526,15 @@ anova(lm1)
 rl <- length(levels(as.factor(d0$Species)))*3  #number of rows
 
 df0 <- data.frame(Treatment = character(), Species = character(), Letters = character())
-df0[1:rl,] <- NA
+df0[1:rl, ] <- NA
 k = 1
 i <- levels(as.factor(d0$Species))[1]
 for (i in levels(as.factor(d0$Species))) {
   
 
-d2 <- d1[d1$Species == i,]
+d2 <- d1[d1$Species == i, ]
 
-model <- aov(Aerial_fresh_weight~Treatment, data =d2 )
+model <- aov(Aerial_fresh_weight~Treatment, data = d2 )
 
 hsd <- HSD.test(model, "Treatment")
 
@@ -541,12 +548,12 @@ k <- k+3
 
 # plotting the ANOVA results
 
-ggplot(d1, aes(x= Treatment, y= Aerial_fresh_weight, fill= Species)) + 
+ggplot(d1, aes(x = Treatment, y = Aerial_fresh_weight, fill = Species)) + 
   geom_boxplot(show.legend = FALSE) +
   facet_grid(. ~ Species) +
-  theme(strip.text.x = element_text(size=0)) +
-  geom_text(data =df0 , aes(y = max(d1$Aerial_fresh_weight), label = Letters))+
-  theme_pubclean()+
+  theme(strip.text.x = element_text(size = 0)) +
+  geom_text(data = df0 , aes(y = max(d1$Aerial_fresh_weight), label = Letters)) +
+  theme_pubclean() +
   labs(title = 'Boxplot 08. The effect of water deficit  on the aerial fresh weight (g) of the different species.')
 
 ```
@@ -560,9 +567,9 @@ ggplot(d1, aes(x= Treatment, y= Aerial_fresh_weight, fill= Species)) +
 ```{r, fig.width=10, echo=FALSE, results = FALSE, message=FALSE, warning=FALSE}
 #performing the ANOVA analysis
 
-d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Aerial_dry_weight") ]
+d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Aerial_dry_weight")]
 d1 <- na.exclude(d1) 
-lm1 <- lm(Aerial_dry_weight ~ Treatment + Species, data=d1)
+lm1 <- lm(Aerial_dry_weight ~ Treatment + Species, data = d1)
 anova(lm1)
 
 
@@ -571,7 +578,7 @@ anova(lm1)
 rl <- length(levels(as.factor(d0$Species)))*3  #number of rows
 
 df0 <- data.frame(Treatment = character(), Species = character(), Letters = character())
-df0[1:rl,] <- NA
+df0[1:rl, ] <- NA
 k = 1
 i <- levels(as.factor(d0$Species))[1]
 for (i in levels(as.factor(d0$Species))) {
@@ -579,7 +586,7 @@ for (i in levels(as.factor(d0$Species))) {
 
 d2 <- d1[d1$Species == i,]
 
-model <- aov(Aerial_dry_weight~Treatment, data =d2 )
+model <- aov(Aerial_dry_weight~Treatment, data = d2)
 
 hsd <- HSD.test(model, "Treatment")
 
@@ -588,17 +595,18 @@ df0$Species [k:(k+2)] <- i
 df0$Letters [k:(k+2)] <- hsd$groups$groups
 
 k <- k+3  
+
 }
 
 
 # plotting the ANOVA results
 
-ggplot(d1, aes(x= Treatment, y= Aerial_dry_weight, fill= Species)) + 
+ggplot(d1, aes(x = Treatment, y = Aerial_dry_weight, fill = Species)) + 
   geom_boxplot(show.legend = FALSE) +
   facet_grid(. ~ Species) +
-  theme(strip.text.x = element_text(size=0)) +
-  geom_text(data =df0 , aes(y = max(d1$Aerial_dry_weight), label = Letters))+
-  theme_pubclean()+
+  theme(strip.text.x = element_text(size = 0)) +
+  geom_text(data = df0 , aes(y = max(d1$Aerial_dry_weight), label = Letters)) +
+  theme_pubclean() +
   labs(title = 'Boxplot 09. Effect of water deficit  on the aerial dry weight (cm) of the different species.')
 
 ```
@@ -613,9 +621,9 @@ ggplot(d1, aes(x= Treatment, y= Aerial_dry_weight, fill= Species)) +
  
 # performing the ANOVA analysis
 
-d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Root_length") ]
+d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Root_length")]
 d1 <- na.exclude(d1)
-lm1 <- lm(Root_length ~ Treatment + Species, data=d1)
+lm1 <- lm(Root_length ~ Treatment + Species, data = d1)
 anova(lm1)
 
  
@@ -624,15 +632,15 @@ anova(lm1)
 rl <- length(levels(as.factor(d0$Species)))*3  #number of rows
 
 df0 <- data.frame(Treatment = character(), Species = character(), Letters = character())
-df0[1:rl,] <- NA
+df0[1:rl, ] <- NA
 k = 1
 i <- levels(as.factor(d0$Species))[1]
 for (i in levels(as.factor(d0$Species))) {
 
 
-d2 <- d1[d1$Species == i,]
+d2 <- d1[d1$Species == i, ]
 
-model <- aov(Root_length~Treatment, data =d2 )
+model <- aov(Root_length~Treatment, data = d2)
 
 hsd <- HSD.test(model, "Treatment")
 
@@ -641,17 +649,18 @@ df0$Species [k:(k+2)] <- i
 df0$Letters [k:(k+2)] <- hsd$groups$groups
 
 k <- k+3
+
 }
 
 
 # # plotting the ANOVA results
 
-ggplot(d1, aes(x= Treatment, y= Root_length, fill= Species)) +
+ggplot(d1, aes(x = Treatment, y = Root_length, fill = Species)) +
   geom_boxplot(show.legend = FALSE) +
   facet_grid(. ~ Species) +
-  theme(strip.text.x = element_text(size=0)) +
-  geom_text(data =df0 , aes(y = max(d1$Root_length), label = Letters))+
-  theme_pubclean()+
+  theme(strip.text.x = element_text(size = 0)) +
+  geom_text(data = df0, aes(y = max(d1$Root_length), label = Letters)) + 
+  theme_pubclean() +
   labs(title = 'Boxplot 10. Effect of water deficit  on the root lenght (cm) of the different species.')
 
   
@@ -664,9 +673,9 @@ ggplot(d1, aes(x= Treatment, y= Root_length, fill= Species)) +
 ```{r, fig.width=10, echo=FALSE, results = FALSE, message=FALSE, warning=FALSE}
 #performing the ANOVA analysis
 
-d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Roots_fresh_weight") ]
+d1 <- d0[d0$Week == "W6", c("Treatment", "Species", "Roots_fresh_weight")]
 d1 <- na.exclude(d1) 
-lm1 <- lm(Roots_fresh_weight ~ Treatment + Species, data=d1)
+lm1 <- lm(Roots_fresh_weight ~ Treatment + Species, data = d1)
 anova(lm1)
 
 
@@ -675,7 +684,7 @@ anova(lm1)
 rl <- length(levels(as.factor(d0$Species)))*3  #number of rows
 
 df0 <- data.frame(Treatment = character(), Species = character(), Letters = character())
-df0[1:rl,] <- NA
+df0[1:rl, ] <- NA
 k = 1
 i <- levels(as.factor(d0$Species))[1]
 for (i in levels(as.factor(d0$Species))) {
@@ -683,7 +692,7 @@ for (i in levels(as.factor(d0$Species))) {
 
 d2 <- d1[d1$Species == i,]
 
-model <- aov(Roots_fresh_weight~Treatment, data =d2 )
+model <- aov(Roots_fresh_weight~Treatment, data = d2)
 
 hsd <- HSD.test(model, "Treatment")
 
@@ -692,17 +701,18 @@ df0$Species [k:(k+2)] <- i
 df0$Letters [k:(k+2)] <- hsd$groups$groups
 
 k <- k+3  
+
 }
 
 
 # plotting the ANOVA results
 
-ggplot(d1, aes(x= Treatment, y= Roots_fresh_weight, fill= Species)) + 
+ggplot(d1, aes(x = Treatment, y = Roots_fresh_weight, fill = Species)) + 
   geom_boxplot(show.legend = FALSE) +
   facet_grid(. ~ Species) +
-  theme(strip.text.x = element_text(size=0)) +
-  geom_text(data =df0 , aes(y = max(d1$Roots_fresh_weight), label = Letters))+
-  theme_pubclean()+
+  theme(strip.text.x = element_text(size = 0)) +
+  geom_text(data = df0 , aes(y = max(d1$Roots_fresh_weight), label = Letters)) +
+  theme_pubclean() +
   labs(title = 'Boxplot 11. The effect of water deficit  on the root fresh weight (g) of the different species.')
 ```
 
@@ -715,9 +725,9 @@ ggplot(d1, aes(x= Treatment, y= Roots_fresh_weight, fill= Species)) +
 ```{r, fig.width=10, echo=FALSE, results = FALSE, message=FALSE, warning=FALSE}
 #performing the ANOVA analysis
 
-d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Roots_dry_weight") ]
+d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Roots_dry_weight")]
 d1 <- na.exclude(d1) 
-lm1 <- lm(Roots_dry_weight ~ Treatment + Species, data=d1)
+lm1 <- lm(Roots_dry_weight ~ Treatment + Species, data = d1)
 anova(lm1)
 
 
@@ -726,15 +736,15 @@ anova(lm1)
 rl <- length(levels(as.factor(d0$Species)))*3  #number of rows
 
 df0 <- data.frame(Treatment = character(), Species = character(), Letters = character())
-df0[1:rl,] <- NA
+df0[1:rl, ] <- NA
 k = 1
 i <- levels(as.factor(d0$Species))[1]
 for (i in levels(as.factor(d0$Species))) {
   
 
-d2 <- d1[d1$Species == i,]
+d2 <- d1[d1$Species == i, ]
 
-model <- aov(Roots_dry_weight~Treatment, data =d2 )
+model <- aov(Roots_dry_weight~Treatment, data = d2)
 
 hsd <- HSD.test(model, "Treatment")
 
@@ -742,23 +752,23 @@ df0$Treatment[k:(k+2)] <- row.names(hsd$groups)
 df0$Species [k:(k+2)] <- i
 df0$Letters [k:(k+2)] <- hsd$groups$groups
 
-k <- k+3  
+k <- k+3 
+
 }
 
 
 # plotting the ANOVA results
 
-ggplot(d1, aes(x= Treatment, y= Roots_dry_weight, fill= Species)) + 
+ggplot(d1, aes(x = Treatment, y = Roots_dry_weight, fill = Species)) + 
   geom_boxplot(show.legend = FALSE) +
   facet_grid(. ~ Species) +
   theme(strip.text.x = element_text(size=0)) +
-  geom_text(data =df0 , aes(y = max(d1$Roots_dry_weight), label = Letters))+
-  theme_pubclean()+
+  geom_text(data = df0, aes(y = max(d1$Roots_dry_weight), label = Letters)) +
+  theme_pubclean() +
   labs(title = 'Boxplot 12. Effect of water deficit  on the root dry weight (g) of the different species.')
 ```
 
 > By comparing with the previous boxplot, we can see better the possible effect of the treatment on the species. We can see that the weight of dry roots material follows the same patter for *R. sativus* by decreasing. Also, even though *Sonchus oleraceus* roots dry weight seems to decrease with the deficit of water, there is no significant difference. *Hordeum vulgare* confirmed a difference of dry roots weight in this figure. It seems that the water deficit increases the weight of its roots. Indeed, there is a significant difference here between the control and the stress.
-
 
 > In order to understand better what the influence are of each variables on the development of the plant and determine what variable can better explain the water stress in this experiment, we are going to conduct a Principal Component Analyse (PCA).
 
@@ -771,13 +781,13 @@ ggplot(d1, aes(x= Treatment, y= Roots_dry_weight, fill= Species)) +
 
 ```{r, results = FALSE, message=FALSE, warning=FALSE}
 
-data2 <- d0[d0$Week == "W6", c(11:21)] #
+data2 <- d0[d0$Week == "W6", c(11:21)] 
 data3 <- na.exclude(data2)
 
 d5 <- d0[d0$Week == "W6", c(4,7, 11:21)]
 d6 <- na.exclude(d5)  # we are using this to create an object with species and treatments to use it later in plotting PCA results 
 
-#
+
 PCA_data_scaled1 <- as.data.frame(scale(data3))
 PCA <- prcomp(PCA_data_scaled1, scale = FALSE)
 
@@ -786,14 +796,15 @@ PCA <- prcomp(PCA_data_scaled1, scale = FALSE)
 
 library(factoextra)
 
-fviz_eig(PCA, addlabels=TRUE)+
+fviz_eig(PCA, addlabels = TRUE) +
   theme_cleveland()
 
 
 ```
 
 *Eigenvalues correspond to the amount of the variation explained by each principal component (PC).*
-> as we can see here in this graph, the first two priciple components  explain almost 70% of the variation in our data sets.
+
+> As we can see here in this graph, the first two principal components explain almost 70% of the variation in our data sets.
 
 > In the next part, we will plot the results of the PCA in an individuals/variables plot, to visualize the outputs in order to have a clear image about the PCA results. 
 
@@ -807,11 +818,11 @@ fviz_pca_biplot(PCA,
              label = "var",
              addEllipses = TRUE,
              repel = TRUE) + 
-   scale_shape_manual(values=rep(19,7))
+   scale_shape_manual(values = rep(19,7))
 
 ```
 
-> to see which variables have the more impact (or contribution) on the variation of the principle components, we will analyze the contribution of each variable to first, second and third principale component, and both the first and the second principale components.
+> To see which variables have the biggest impact (or contribution) on the variation of the principle components, we will analyze the contribution of each variable to first, second and third principale component, and both the first and the second principale components.
 
 ```{r}
 # Contribution of the variables to PC 1 (first dimension) :
@@ -819,36 +830,36 @@ fviz_pca_biplot(PCA,
 #  The function fviz_contrib() [in factoextra package] is used to visualize the contributions of rows/columns from the results of Principal Component Analysis (PCA).
 
 
-fviz_contrib(PCA, choice = "var", axes = 1, top = 11)+
+fviz_contrib(PCA, choice = "var", axes = 1, top = 11) +
   theme_cleveland()
 
 # Contribution of the variables to PC 2 (second dimension) :
 
-fviz_contrib(PCA, choice = "var", axes = 2, top = 11)+
+fviz_contrib(PCA, choice = "var", axes = 2, top = 11) +
   theme_cleveland()
 
 
 # Contribution of the variables to PC 3 (third dimension) :
 
-fviz_contrib(PCA, choice = "var", axes = 3, top = 11)+
+fviz_contrib(PCA, choice = "var", axes = 3, top = 11) +
   theme_cleveland()
 
 
 # Contribution of the variables to PC 1 and 2 :
 
-fviz_contrib(PCA, choice = "var", axes = 1:2, top = 11)+
+fviz_contrib(PCA, choice = "var", axes = 1:2, top = 11) +
   theme_cleveland()
 ```
 
-> we can conclude from the previous plots, that the variables that are contributing most to both first and second principal components are :
+> We can conclude from the previous plots, that the variables that are contributing most to both first and second principal components are :
 
-> * Leaf width
-> * Plant height
-> * Leaf area
-> * Leaf length
-> * Aerial dry  weight
-> * Root dry weight
-> * Root length
+> * Leaf width;
+> * Plant height;
+> * Leaf area;
+> * Leaf length;
+> * Aerial dry  weight;
+> * Root dry weight;
+> * Root length.
 
 > Note that the variables above are ordred by their percentage of contribution.
 
