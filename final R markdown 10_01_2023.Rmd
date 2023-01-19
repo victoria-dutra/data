@@ -12,6 +12,7 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
 # if (!dir.exists("results")) dir.create("results")  # create folder if necessary
 # knitr::opts_chunk$set(              # nice results format
 #   fig.path = "results22/",            # Folder for figures
@@ -19,6 +20,8 @@ knitr::opts_chunk$set(echo = TRUE)
 #   dev.args = list(type = "cairo"),  # png args. Improves png
 #   dpi = 100                         # 100 for working, 300 for publication
 # )
+
+#if you don't have the the packages bellow already installed, you can uncomment them using (Ctrl+Alt+c) and install them  
 # install.packages("readxl", dependencies = TRUE)
 # install.packages("ggplot2", dependencies = TRUE)
 # install.packages(c("ggplot2", "ggpubr", "tidyverse", "broom", "AICcmodavg"), , dependencies = TRUE)
@@ -28,6 +31,7 @@ library(tidyverse)
 library(broom)
 library(ggplot2)
 library(agricolae)
+library(viridis) # for aesthetic
 ```
 
 #### This file is regarding the results for the water stress green house experiment - Group 5
@@ -40,13 +44,21 @@ library(agricolae)
 #install.packages('gsheet') # try with this one or without if it does not work for you
 library(gsheet) 
 d0 <- gsheet2tbl('https://docs.google.com/spreadsheets/d/1WM6hDgwCFxbLpT37HLzU-iYZAEGBdHP6CpU8BDwWmZc/edit#gid=0', sheet = "Data")
+
+
+# in case you couldn't use the data from the Google sheet for any reason, you can still use the code and the data file already downloaded, in the file data_dec:
+
+# install.packages("readxl")
+# readxl::read_excel("data_dec/water_stress.xlsx")
+# d0 <- readxl::read_excel("data_dec/water_stress.xlsx", sheet = "Data")
+
 ```
 
 > After importing the data, next step is to visualize it, by creating different plots.
 
 ## Chapter 2 - Visualization of data with plots. 
 > Here we want to create many plots in order to better visualize the data.
-We will use X= Date and Y= Variable (Y1= Plant height ; Y2= Leaf number ; Y3= Leaf lenght ; Y4= Leaf width ; Y5= Leaf area ; Y7= Chlorophyll)
+We will use X= Date and Y= Variable (Plant height; Leaf number; Leaf lenght; Leaf width; Leaf area; Chlorophyll content; root lenght; aerial fresh weight, aerial dry weight, root fresh weight; root dry weight)
 
 **The code used for this step is : 
 ggplot(d0, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) + 
@@ -64,34 +76,36 @@ ggplot(d0, aes(x= Date, y= Plant_height, group= PlantId, color= Treatment)) +
   > *  we have chosen to analyze the data for week 6, because the effect of the water stress deficit is clearer for this week. 
   
   
-> In order to get a better understanding of the variability between weeks, the group chose to explore 2 main graphs for soil parameters. One graph for a cultivated species (Solanum lycopersicum) and another one for a wild species (Lolium perenne). The following chunk is performing the visual representation.
+> In order to get a better understanding of the variability between weeks, the group chose to explore 2 main graphs for soil parameters. One graph for a cultivated species (*Solanum lycopersicum*) and another one for a wild species (*Lolium perenne*). The following chunk is performing the visual representation.
 
 ```{r}
 # For Solanum lycopersicum
 
-library(viridis) # for aesthetic
+s1 <- d0[d0$Species=="Solanum lycopersicum",] #create a subset of data
 
-s1 <- d0[d0$Species=="Solanum lycopersicum",]
-ggplot(s1, aes(x= Week, y= Soil_humidity, group= PlantId, color= Treatment)) + 
+ggplot(s1, aes(x= Week, y= Soil_humidity, group= PlantId, color= Treatment)) +  #plot the data
   geom_line() +
   labs(title = expression(paste('Figure 1. Evolution of Soil humidity (%) of', italic(' S. lycopersicum'),' on 6 weeks'))) +
   theme_pubclean() +
   scale_color_viridis(discrete = TRUE)
   
 # For 	Lolium perenne
-s2 <- d0[d0$Species=="Lolium perenne",]
-ggplot(s2, aes(x= Week, y= Soil_humidity, group= PlantId, color= Treatment)) + 
+
+s2 <- d0[d0$Species=="Lolium perenne",] #create a subset of data
+
+ggplot(s2, aes(x= Week, y= Soil_humidity, group= PlantId, color= Treatment)) + #plot the data
   geom_line() +
   labs(title = expression(paste('Figure 2. Evolution of Soil humidity (%) of', italic(' Lolium perenne'), ' on 6 weeks'))) +
   theme_pubclean() +
   scale_color_viridis(discrete = TRUE)
 ```
 
-### Interpretation Fig1 and Fig2:
+### Interpretation Figure 01 and Figure 02:
 
-> It is visible in both graphs that at week 6 shows the most contrast between treatments (control, intermediate, and water stress). The wild species seems to reduce its humidity in a steadier pace than the cultivated species. On the other hand, the soil humidity of S. lycopersicum dropped sharply following the treatments intermediate and stress. 
+> It is visible in both graphs that at week 6 shows the most contrast between treatments (control, intermediate, and water stress). The wild species seems to reduce its humidity in a steadier pace than the cultivated species. On the other hand, the soil humidity of *S. lycopersicum* dropped sharply following the treatments intermediate and stress. 
 
-> The next code chunk is meant to help visualize the pattern we have by taking only the variable "Plant_height" and the species Raphanus sativus. This species was the most representative species to assess the plant height by treatment, and the plant height appeared to be the best variable to extrapolate the stress level of the plant.
+
+> The next code chunk is meant to help visualize the pattern we have during the 6 weeks of the experiment by showing only the variable "Plant_height" of the species *Raphanus sativus*, which we beleive that it has a representative pattern of the majority of the species to assess the plant height by treatment and by date.
 
 ```{r}
 # For 	Raphanus sativus
@@ -104,11 +118,13 @@ ggplot(s3, aes(x= Week, y= Plant_height, group= PlantId, color= Treatment)) +
   scale_color_viridis(discrete = TRUE)
 ```
 
-### Interpretation Fig3:
+### Interpretation Figure 03:
 
-> It appears that the treatment has an influence on the height of the plant. In week 2 we can see the difference clearly between the well-watered and the water-stressed plants where the plant height is increasing in control and intermediate but decreasing under stress conditions. The following weeks evolution depends a lot on the repetition, and the variability belong them is high. Week 6 is determining the influence of the treatment on radish growth: it will peak above 20cm for the well-watered plants, between 15 and 20cm for the intermediate treated plants, and on average 15cm for the water-stressed plants.
+> It appears that the treatment has an influence on the height of the plant. In week 2 we can see the difference clearly between the well-watered and the water-stressed plants where the plant height is increasing in control and intermediate but decreasing under stress conditions. The following weeks evolution depends a lot on the repetition, and the variability among them is high. Week 6 is determining the influence of the treatment on radish growth: it will peak above 20cm for the well-watered plants, between 15 and 20cm for the intermediate treated plants, and on average 15cm for the water-stressed plants.
 
-> For the third part of this project, we will advance with statistical analyses. For this we will use multiple packages including "ggplot2", "ggpubr", "tidyverse", "broom" and "AICcmodavg". Now that we have seen all the variables and the difference for species over time, as we will focus on Week 6 because it appears to be the deciding week.
+> so we can conclude that on  week 6 we are having the highest variability and the effect of the water stress is more significant, tha's why in the coming parts we are going to analyse the data of the week 6 only,to assess the effect of water stress on the other variables.
+
+> For the third part of this project, we will advance with statistical analyses. For this we will use multiple packages including "ggplot2", "ggpubr", "tidyverse", "broom" and "AICcmodavg".
 
 # Chapter 3 - ANOVA
 
@@ -120,25 +136,26 @@ ggplot(s3, aes(x= Week, y= Plant_height, group= PlantId, color= Treatment)) +
 
 >  We are going to present every variable that we selected to compare all species. Those 12 variables are: Soil humidity, Plant height, Leaf number, Leaf length, Leaf width, Leaf area, Chlorophyll content, Aerial fresh weight, Aerial dry weight, Root length, Roots fresh weight, Roots dry weight.
 
-### Soil_humidity
+### Soil humidity
 
-> The following code chunk will by a for loop: (1) give the ANOVA table, (2) perform the Tukey HSD test, and (3) boxplot the ANOVA for the variable Soil humidity, and all studied species, on the Week 6.
+> The following code chunk will by a for loop: (1) perform the ANOVA, (2) perform the Tukey HSD test, and (3) boxplot the ANOVA for the variable Soil humidity, and all studied species, on the Week 6.
 
 ```{r, fig.width=10}
+
 #performing the ANOVA analysis
 
-d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Soil_humidity") ]
-d1 <- na.exclude(d1) 
-lm1 <- lm(Soil_humidity ~ Treatment + Species, data=d1)
-anova(lm1)
+d1 <- d0[d0$Week == "W6" , c("Treatment", "Species", "Soil_humidity") ] # create a subset of the data
+d1 <- na.exclude(d1)                                                    # exclude the missing observations
+lm1 <- lm(Soil_humidity ~ Treatment + Species, data=d1)                 # create the linear model
+anova(lm1)                                                              # perfom the ANOVA analysis
 
 
 # Performing the Tukey HSD analysis
 
-rl <- length(levels(as.factor(d0$Species)))*3  #number of rows
+rl <- length(levels(as.factor(d0$Species)))*3                                          # create an empty table with the number of
+df0 <- data.frame(Treatment = character(), Species = character(), Letters = character()) #rows and column that match our data 
+df0[1:rl,] <- NA                                                                          #then fill it with the Tukey HSD results.
 
-df0 <- data.frame(Treatment = character(), Species = character(), Letters = character())
-df0[1:rl,] <- NA
 k = 1
 i <- levels(as.factor(d0$Species))[1]
 for (i in levels(as.factor(d0$Species))) {
@@ -169,11 +186,11 @@ ggplot(d1, aes(x= Treatment, y= Soil_humidity, fill= Species)) +
   labs(title = 'Boxplot 01. Effect of water deficit treatments on the soil humidity (%) of the different species.')
 ```
 
-> The first boxplot shows that the treatments affect significantly all the species' soil. The difference in humidity is considerably visible for most of the species, with the biggest difference between treatment c (control) and treatment s (stress), especially for Hordeum vulgare and Lolium perenne. Whereas Beta vulgaris and Sonchus oleraceus show the the smallest gap between treatments on soil humidity. Notice that the soil humidity of Amaranthus retroflexus and Spinaca oleraceae have similar pattern but also high variability inside their repetitions. 
+> The first boxplot shows that the soil moisture of each treatment is significantly different in all species. The difference in humidity is considerably visible for most of the species, with the biggest difference between treatment c (control) and treatment s (stress), especially for *Hordeum vulgare* and *Lolium perenne*. Whereas *Beta vulgaris* and *Sonchus oleraceus* show the the smallest gap between treatments on soil humidity. Notice that the soil humidity of *Amaranthus retroflexus* and *Spinaca oleraceae* have similar pattern but also high variability inside their repetitions. 
 
-### Plant_height
+### Plant height
 
-> The same analysis will be now perform for the variable Plant height, to compare all the species, on the Week 6.
+> The same analysis will be now perform for the variable Plant height, to compare the different treatment of each species, using the Week 6 data.
 
 ```{r, fig.width=10, echo=FALSE, results = FALSE, message=FALSE, warning=FALSE}
 
@@ -224,9 +241,9 @@ ggplot(d1, aes(x= Treatment, y= Plant_height, fill= Species)) +
 
 ```
 
-> Two main patterns appear here. On one hand, the species that are not significantly affected but the treatment, those are: A. retroflexus, Beta vulgaris, Lolium perenne, Portulaca oleracea and Sonchus oleraceus, and they are all wild species except Beta vulgaris. On the other hand, they are all cultivated species and show a significant decrease of the growth under water deficit conditions, those are: Hordeum vulgare, Raphanus sativus, Solanum lycopersicum and Spinacia oleracea. 
+> we can clearly see from this plot that the species that are not significantly affected by the different treatments, are: +*A. retroflexus, Beta vulgaris, Lolium perenne, Portulaca oleracea* and *Sonchus oleraceus*, and they are all wild species except *Beta vulgaris*. while almost all cultivated species showed a significant decrease of the growth under water deficit conditions, those are: *Hordeum vulgare, Raphanus sativus, Solanum lycopersicum* and *Spinacia oleracea*. 
 
-### Leaf_number
+### Leaf number
 
 > The graph for the variable Leaf number is showing below:
 
@@ -276,9 +293,9 @@ ggplot(d1, aes(x= Treatment, y= Leaf_number, fill= Species)) +
 
 ```
 
-> On the Boxplot 03, cultivated species are decreasing their number of leaves with the deficit of water represented by the treatment s (stress), expect for S. oleracea. Also, in average there are no significant change between the control (c) and the intermediate (i) concerning Beta vulgaris. The wild species are not showing significant difference except for Sonchus oleraceus between the control (c) and the two other treatments i.e. intermediate (n) and water stress (s).
+> On the Boxplot 03, cultivated species are decreasing their number of leaves with the deficit of water represented by the treatment s (stress), expect for *S. oleracea*. Also, in average there are no significant change between the control (c) and the intermediate (i) concerning *Beta vulgaris*. The wild species are not showing significant difference except for *Sonchus oleraceus* between the control (c) and the two other treatments i.e. intermediate (n) and water stress (s).
 
-### Leaf_length
+### Leaf length
 
 > The same analyse is done for the variable Leaf length and is shown by the following graph:
 
@@ -327,9 +344,9 @@ ggplot(d1, aes(x= Treatment, y= Leaf_length, fill= Species)) +
   labs(title = 'Boxplot 04. Effect of water deficit  on the leaf lenght (cm) of the different species.')
 ```
 
-> The Boxplot 04 above represents well the morphological differences of the species at all levels of water supply. The sepcies the most affected by the treatments is R. sativus. The latter highlights the decrease in leaf length in intermediate and in stress treatments. Other species are slightly impact byt the treatments i or s compared to the control, like Amaranthus retroflexus, Portulaca oleracea, Solanum lycopersicum and Spinaca oleracea.
+> The Boxplot 04 above represents well the differences in leaf lenght of the different species at all levels of water supply. The sepcies the most affected by the treatments is *R. sativus*. The latter highlights the decrease in leaf length in intermediate and in stress treatments. Other species are slightly impact byt the treatments i or s compared to the control, like *Amaranthus retroflexus, Portulaca oleracea, Solanum lycopersicum* and *Spinaca oleracea*.
 
-### Leaf_width
+### Leaf width
 
 > Leaf width variable is presented below.
 
@@ -378,9 +395,9 @@ ggplot(d1, aes(x= Treatment, y= Leaf_width, fill= Species)) +
   labs(title = 'Boxplot 05. Effect of water deficit  on the leaf width (cm) of the different species.')
 ```
 
-> The Boxplot 05 is correlating with the Boxplot 05 by showing Raphanus sativus leaf width as the most affected species by both intermediate and stress treatments. The other species experiencing a decrease of their leaf width by one treatment only (i or s) are Amaranthus retroflexus, Portulaca oleracea, Solanum lycopersicum and Spinacia oleracea.
+> The Boxplot 05 is correlating with the Boxplot 05 by showing *Raphanus sativus* leaf width as the most affected species by both intermediate and stress treatments. The other species experiencing a decrease of their leaf width by one treatment only (i or s) are *Amaranthus retroflexus, Portulaca oleracea, Solanum lycopersicum* and *Spinacia oleracea*.
 
-### Leaf_area
+### Leaf area
 
 > Now the Leaf area of each species is analysed and the graph attached is the following:
 
@@ -430,9 +447,9 @@ ggplot(d1, aes(x= Treatment, y= Leaf_area, fill= Species)) +
   labs(title = 'Boxplot 06. Effect of water deficit  on the leaf area (%) of the different species.')
 ```
 
-> The Boxplot 06 is supposedly an extrapolation of the two previous and confirms that R. sativus is the most impacted species by the water deficit. The rest of the species are also not more clearly impacted than the two previous figures, and only two species seem to not be affected by the experiment here. Those species are Hordeum vulgare and Lolium perenne.
+> The Boxplot 06 is supposedly an extrapolation of the two previous and confirms that *R. sativus* is the most impacted species by the water deficit. The rest of the species are also not more clearly impacted than the two previous figures, and only two species seem to not be affected by the experiment here. Those species are *Hordeum vulgare* and *Lolium perenne*.
 
-### Chlorophyll_content
+### Chlorophyll content
 
 > Boxplot 07 is presenting the Chlorophyll content of all species at different treatments.
 
@@ -482,9 +499,9 @@ ggplot(d1, aes(x= Treatment, y= Chlorophyll_content, fill= Species)) +
    labs(title = 'Boxplot 07. Effect of water deficit  on the chlorophyll content (SPAD Unit) of the different species.')
 ```
 
-> There are only 7 compared species here because we could not measure the Chlorophyll content of the species Hordeun vulgare and Lolium perenne due to their too thin leaves. Now what we see in the graph above is interesting but it is probably a not long enough experiement to have significant results. The chlorophyll content significantly increases in R. sativus between the control and the stress. However this content looks to reduce in A. retroflexus and S. lycopersicum. 
+> There are only 7 compared species here because we could not measure the Chlorophyll content of the species *Hordeun vulgare* and *Lolium perenne* due to their too thin leaves. Now what we see in the graph above is interesting but it is probably a not long enough experiement to have significant results. The chlorophyll content significantly increases in *R. sativus* between the control and the stress. However this content seems to be reduced in *A. retroflexus* and *S. lycopersicum*. 
 
-### Aerial_fresh_weight
+### Aerial fresh weight
 
 > The Aerial fresh weight is represented by the graph below:
 
@@ -534,9 +551,9 @@ ggplot(d1, aes(x= Treatment, y= Aerial_fresh_weight, fill= Species)) +
 
 ```
 
-> Beta vulgaris, Raphanus sativus and Sonchus oleraceus are clearly impacted by the two treatments in deficit of water. Solanum lycopersicum is and Hordeum vulgare are also impacted by mostly by the stress treatment (s). All those species are cultivated species except Sonchus oleraceus, and all will probably decrease in yield if they lack of water, according to this experiment.
+> *Beta vulgaris, Raphanus sativus* and *Sonchus oleraceus* are clearly impacted by the two treatments in deficit of water. *Solanum lycopersicum*  and *Hordeum vulgare* are also impacted by mostly by the stress treatment (s). All those species are cultivated species except *Sonchus oleraceus*, and all will probably decrease in yield if they lack of water, according to this experiment.
 
-### Aerial_dry_weight
+### Aerial dry weight
 
 > The Boxplot 09 shows the Aerial dry weight of the different species, at the end of the experiment.
 
@@ -586,11 +603,11 @@ ggplot(d1, aes(x= Treatment, y= Aerial_dry_weight, fill= Species)) +
 
 ```
 
-> It is slightly less obvious in the Boxplot 09 that water scarcity affects the plants, but this analyse is not adapted to every species since they have very different morphologies. Nonetheless, R. sativus data correct with the previous analysis and its aerial dry weight is decreasing with the two treatments i and s. Other than that, Beta vulgaris, Hordeum vulgare, Solanum lycopersicum and Sonchus oleraceus are also showing a significant reduction of aerial dry weight by diminish the water availability. We assume that Portulaca oleracea weight is too small to be interpreted. 
+> It is slightly less obvious in the Boxplot 09 that water scarcity affects the plants aerial dry weight, but this analyse is not adapted to every species since they have very different morphologies. Nonetheless, *R. sativus* data goes along with the previous analysis and its aerial dry weight is decreasing with the two treatments i and s. Other than that, *Beta vulgaris, Hordeum vulgare, Solanum lycopersicum* and *Sonchus oleraceus* are also showing a significant reduction of aerial dry weight due to the reduction of the water availability. We assume that *Portulaca oleracea* dry weight is too small to be interpreted. 
 
 > The Boxplots 10, 11 and 12 will present the root measurements taken after the experiment. 
 
-### Root_length
+### Root length
 
 ```{r, fig.width=10, echo=FALSE, results = FALSE, message=FALSE, warning=FALSE}
  
@@ -640,9 +657,9 @@ ggplot(d1, aes(x= Treatment, y= Root_length, fill= Species)) +
   
 ```
 
-> Boxplot 09 is showing that the water deficit during this short experiment still has an impact on the root length of some species (Hordeum vulgare and Raphanus sativus). Interestingly while Hordeum vulgare seems to reduce its roots length, Raphanus sativus will increase its root length under water scarcity. It is not significant enough for the other species that water stress influences the root length, in this experiment.
+> Boxplot 09 is showing that the water deficit during this short experiment still has an impact on the root length of some species (*Hordeum vulgare* and *Raphanus sativus*). Interestingly while *Hordeum vulgare* seems to reduce its roots length, *Raphanus sativus* will increase its root length under water scarcity. It is not significant enough for the other species that water stress influences the root length, in this experiment.
 
-### Roots_fresh_weight
+### Roots fresh weight
 
 ```{r, fig.width=10, echo=FALSE, results = FALSE, message=FALSE, warning=FALSE}
 #performing the ANOVA analysis
@@ -689,9 +706,9 @@ ggplot(d1, aes(x= Treatment, y= Roots_fresh_weight, fill= Species)) +
   labs(title = 'Boxplot 11. The effect of water deficit  on the root fresh weight (g) of the different species.')
 ```
 
-> The Boxplot 11 is showing at the same scale all the studied species of all size of roots. It is only appealing for the cultivated species R. sativus. The latter is clearly showing a drop weight for its fresh roots with the decrease of available water.  There is not a clear pattern among the other species.
+> The Boxplot 11 is showing at the same scale all the studied species of all size of roots. It is only appealing for the cultivated species *R. sativus*. The latter is clearly showing a drop weight for its fresh roots with the decrease of available water.  There is not a clear pattern among the other species.
 
-### Roots_dry_weight
+### Roots dry weight
 
 > The boxplot 12 is taking the dry weight of the root in each treatment for all the studied species in order to see the possible effect of the water stress and compare those responses.
 
@@ -740,17 +757,19 @@ ggplot(d1, aes(x= Treatment, y= Roots_dry_weight, fill= Species)) +
   labs(title = 'Boxplot 12. Effect of water deficit  on the root dry weight (g) of the different species.')
 ```
 
-> By comparing with the previous boxplot, we can see better the possible effect of the treatment on the species. We can see that the weight of dry roots material follows the same patter for R. sativus by decreasing. Also, even though Sonchus oleraceus roots dry weight seems to decrease with the deficit of water, there is no significant difference. Hordeum vulgare confirmed a difference of dry roots weight in this figure. It seems that the water deficit increases the weight of its roots. Indeed, there is a significant difference here between the control and the stress.
+> By comparing with the previous boxplot, we can see better the possible effect of the treatment on the species. We can see that the weight of dry roots material follows the same patter for *R. sativus* by decreasing. Also, even though *Sonchus oleraceus* roots dry weight seems to decrease with the deficit of water, there is no significant difference. *Hordeum vulgare* confirmed a difference of dry roots weight in this figure. It seems that the water deficit increases the weight of its roots. Indeed, there is a significant difference here between the control and the stress.
 
-> In order to understand better what the influence are of each variables on the development of the plant and determine what variable is the most dominant in this experiment, we are going to conduct a Principal Component Analyse (PCA).
+
+> In order to understand better what the influence are of each variables on the development of the plant and determine what variable can better explain the water stress in this experiment, we are going to conduct a Principal Component Analyse (PCA).
+
 
 ## PCA analysis
 
-> In this part we are going to do a PCA analysis of our data. After that we need to make a subset for the data with only numerical variables and exclude the other variables, scale the data and after that we will exclude all the missing data.
+> In this part we are going to do a PCA analysis of our data. fisrt  we need to make a subset for the data with only numerical variables, exclude the missing observations,  scale the data, then we will perfom the PCA test.  
 
 > Then we are going to plot the PCA results.
 
-```{r}
+```{r, results = FALSE, message=FALSE, warning=FALSE}
 
 data2 <- d0[d0$Week == "W6", c(11:21)] #
 data3 <- na.exclude(data2)
@@ -765,13 +784,20 @@ PCA <- prcomp(PCA_data_scaled1, scale = FALSE)
 
 # Extract and visualize the eigenvalues/variances of dimensions:
 
-#Eigenvalues correspond to the amount of the variation explained by each principal component (PC).
-
-
 library(factoextra)
+
 fviz_eig(PCA, addlabels=TRUE)+
   theme_cleveland()
 
+
+```
+
+*Eigenvalues correspond to the amount of the variation explained by each principal component (PC).*
+> as we can see here in this graph, the first two priciple components  explain almost 70% of the variation in our data sets.
+
+> In the next part, we will plot the results of the PCA in an individuals/variables plot, to visualize the outputs in order to have a clear image about the PCA results. 
+
+```{r}
 
 # graph for individuals/variables
 # Draw the graph of individuals/variables from the output of Principal Component Analysis (PCA).
@@ -783,13 +809,17 @@ fviz_pca_biplot(PCA,
              repel = TRUE) + 
    scale_shape_manual(values=rep(19,7))
 
+```
 
+> to see which variables have the more impact (or contribution) on the variation of the principle components, we will analyze the contribution of each variable to first, second and third principale component, and both the first and the second principale components.
+
+```{r}
 # Contribution of the variables to PC 1 (first dimension) :
 
 #  The function fviz_contrib() [in factoextra package] is used to visualize the contributions of rows/columns from the results of Principal Component Analysis (PCA).
 
 
-fviz_contrib(PCA, choice = "var", axes = 1, top = 5)+
+fviz_contrib(PCA, choice = "var", axes = 1, top = 11)+
   theme_cleveland()
 
 # Contribution of the variables to PC 2 (second dimension) :
@@ -808,8 +838,19 @@ fviz_contrib(PCA, choice = "var", axes = 3, top = 11)+
 
 fviz_contrib(PCA, choice = "var", axes = 1:2, top = 11)+
   theme_cleveland()
-
-
 ```
+
+> we can conclude from the previous plots, that the variables that are contributing most to both first and second principal components are :
+
+> * Leaf width
+> * Plant height
+> * Leaf area
+> * Leaf length
+> * Aerial dry  weight
+> * Root dry weight
+> * Root length
+
+> Note that the variables above are ordred by their percentage of contribution.
+
 
 
